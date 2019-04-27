@@ -1,0 +1,44 @@
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/canvas_extended_primitives/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_f9905 
+[1/2] Building CXX object CMakeFiles\cmTC_f9905.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_f9905.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/canvas_extended_primitives/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_cd459 
+[1/2] Building CXX object CMakeFiles\cmTC_cd459.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_cd459.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_cd459.dir\src.cxx.obj /FdCMakeFiles\cmTC_cd459.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/canvas_extended_primitives/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_a2e34 
+[1/2] Building CXX object CMakeFiles\cmTC_a2e34.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_a2e34.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/canvas_extended_primitives/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_76e69 
+[1/2] Building CXX object CMakeFiles\cmTC_76e69.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_76e69.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_76e69.dir\src.cxx.obj /FdCMakeFiles\cmTC_76e69.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }

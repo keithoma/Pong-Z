@@ -1,0 +1,12 @@
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/sgfx_basics.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/install/local.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/install.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/list_install_components.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/build/CMakeFiles/sgfx.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/build/CMakeFiles/install/local.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/build/CMakeFiles/install.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/build/CMakeFiles/edit_cache.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/build/CMakeFiles/rebuild_cache.dir
+C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/build/CMakeFiles/list_install_components.dir

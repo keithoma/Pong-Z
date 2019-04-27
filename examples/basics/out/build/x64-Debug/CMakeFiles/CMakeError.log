@@ -1,0 +1,352 @@
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_68e09 
+[1/2] Building CXX object CMakeFiles\cmTC_68e09.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_68e09.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_a13a3 
+[1/2] Building CXX object CMakeFiles\cmTC_a13a3.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_a13a3.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_a13a3.dir\src.cxx.obj /FdCMakeFiles\cmTC_a13a3.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_ac955 
+[1/2] Building CXX object CMakeFiles\cmTC_ac955.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_ac955.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_b5e28 
+[1/2] Building CXX object CMakeFiles\cmTC_b5e28.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_b5e28.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_b5e28.dir\src.cxx.obj /FdCMakeFiles\cmTC_b5e28.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_bc095 
+[1/2] Building CXX object CMakeFiles\cmTC_bc095.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_bc095.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_6fc6d 
+[1/2] Building CXX object CMakeFiles\cmTC_6fc6d.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_6fc6d.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_6fc6d.dir\src.cxx.obj /FdCMakeFiles\cmTC_6fc6d.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_988dc 
+[1/2] Building CXX object CMakeFiles\cmTC_988dc.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_988dc.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_1072c 
+[1/2] Building CXX object CMakeFiles\cmTC_1072c.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_1072c.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_1072c.dir\src.cxx.obj /FdCMakeFiles\cmTC_1072c.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_686e4 
+[1/2] Building CXX object CMakeFiles\cmTC_686e4.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_686e4.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_cee57 
+[1/2] Building CXX object CMakeFiles\cmTC_cee57.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_cee57.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_cee57.dir\src.cxx.obj /FdCMakeFiles\cmTC_cee57.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_f9ddc 
+[1/2] Building CXX object CMakeFiles\cmTC_f9ddc.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_f9ddc.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_6c60e 
+[1/2] Building CXX object CMakeFiles\cmTC_6c60e.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_6c60e.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_6c60e.dir\src.cxx.obj /FdCMakeFiles\cmTC_6c60e.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_9b9bd 
+[1/2] Building CXX object CMakeFiles\cmTC_9b9bd.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_9b9bd.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_e0225 
+[1/2] Building CXX object CMakeFiles\cmTC_e0225.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_e0225.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_e0225.dir\src.cxx.obj /FdCMakeFiles\cmTC_e0225.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_89854 
+[1/2] Building CXX object CMakeFiles\cmTC_89854.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_89854.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_d7cc9 
+[1/2] Building CXX object CMakeFiles\cmTC_d7cc9.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_d7cc9.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_d7cc9.dir\src.cxx.obj /FdCMakeFiles\cmTC_d7cc9.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_171de 
+[1/2] Building CXX object CMakeFiles\cmTC_171de.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_171de.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_ee47d 
+[1/2] Building CXX object CMakeFiles\cmTC_ee47d.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_ee47d.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_ee47d.dir\src.cxx.obj /FdCMakeFiles\cmTC_ee47d.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_c77f7 
+[1/2] Building CXX object CMakeFiles\cmTC_c77f7.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_c77f7.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_4f527 
+[1/2] Building CXX object CMakeFiles\cmTC_4f527.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_4f527.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_4f527.dir\src.cxx.obj /FdCMakeFiles\cmTC_4f527.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_acdce 
+[1/2] Building CXX object CMakeFiles\cmTC_acdce.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_acdce.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_f8bdd 
+[1/2] Building CXX object CMakeFiles\cmTC_f8bdd.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_f8bdd.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_f8bdd.dir\src.cxx.obj /FdCMakeFiles\cmTC_f8bdd.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_35ab1 
+[1/2] Building CXX object CMakeFiles\cmTC_35ab1.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_35ab1.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_6b4f6 
+[1/2] Building CXX object CMakeFiles\cmTC_6b4f6.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_6b4f6.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_6b4f6.dir\src.cxx.obj /FdCMakeFiles\cmTC_6b4f6.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_b7f92 
+[1/2] Building CXX object CMakeFiles\cmTC_b7f92.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_b7f92.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_8a969 
+[1/2] Building CXX object CMakeFiles\cmTC_8a969.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_8a969.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_8a969.dir\src.cxx.obj /FdCMakeFiles\cmTC_8a969.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_5c214 
+[1/2] Building CXX object CMakeFiles\cmTC_5c214.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_5c214.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_a9c90 
+[1/2] Building CXX object CMakeFiles\cmTC_a9c90.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_a9c90.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_a9c90.dir\src.cxx.obj /FdCMakeFiles\cmTC_a9c90.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_43bfe 
+[1/2] Building CXX object CMakeFiles\cmTC_43bfe.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_43bfe.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_1f7a3 
+[1/2] Building CXX object CMakeFiles\cmTC_1f7a3.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_1f7a3.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_1f7a3.dir\src.cxx.obj /FdCMakeFiles\cmTC_1f7a3.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_0d3f7 
+[1/2] Building CXX object CMakeFiles\cmTC_0d3f7.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-pedantic'
+[2/2] Linking CXX executable cmTC_0d3f7.exe
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: C:/Users/chris/source/sgfx/examples/basics/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Preview/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_b5f68 
+[1/2] Building CXX object CMakeFiles\cmTC_b5f68.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_b5f68.dir/src.cxx.obj 
+C:\PROGRA~2\MICROS~2\2019\Preview\VC\Tools\MSVC\1420~1.276\bin\HostX64\x64\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall -Dflag_supported /MDd /ZI /Ob0 /Od /RTC1 /JMC   -Werror /showIncludes /FoCMakeFiles\cmTC_b5f68.dir\src.cxx.obj /FdCMakeFiles\cmTC_b5f68.dir\ /FS -c src.cxx
+cl : Command line error D8021 : invalid numeric argument '/Werror'
+ninja: build stopped: subcommand failed.
+
+Source file was:
+int main() { return 0; }
