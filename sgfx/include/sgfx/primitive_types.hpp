@@ -11,6 +11,8 @@ namespace sgfx
 	
 	struct point
 	{
+		int x;
+		int y;
 	};
 	
 	struct dimension
