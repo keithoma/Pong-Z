@@ -1,9 +1,0 @@
-# ninja log v5
-12	669	578098237	build/CMakeFiles/sgfx.dir/src/primitives.cpp.obj	1d53f6c792a3af5b
-2	721	578098237	CMakeFiles/sgfx_basics.dir/main.cpp.obj	5161d0f7781704cd
-9	767	578098237	build/CMakeFiles/sgfx.dir/src/canvas.cpp.obj	e2aa9e85df6f01d9
-5	833	578098238	build/CMakeFiles/sgfx.dir/src/window.cpp.obj	2311bb49f0bc2517
-892	943	578098238	build/sgfx.lib	3772e8509b22d698
-944	2396	578098239	sgfx_basics.exe	99d60dd91b9da29
-2	691	578098864	CMakeFiles/sgfx_basics.dir/main.cpp.obj	5161d0f7781704cd
-730	1522	578098865	sgfx_basics.exe	99d60dd91b9da29
