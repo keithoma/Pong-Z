@@ -22,11 +22,6 @@ enable_cxx_compiler_flag_if_supported("-Werror")
 
 add_executable(pong_step0 ball.cpp main.cpp)
 
-find_package(glfw3)
-find_package(GLEW)
-find_package(OpenGL)
-
-add_subdirectory(../sgfx build)
-target_link_libraries(pong_step0 sgfx glfw GLEW::GLEW OpenGL::GL)
+target_link_libraries(pong_step0 sgfx)
 
 install(TARGETS pong_step0 DESTINATION bin)
