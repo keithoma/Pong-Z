@@ -17,6 +17,7 @@ namespace sgfx
 	
 	struct dimension
 	{
+		int value;
 	};
 	
 	struct rectangle
