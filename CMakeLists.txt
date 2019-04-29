@@ -3,7 +3,8 @@ project(CxxAsNewLang)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(myprog myprog.cpp)
-
 #add_subdirectory(sgfx)
 add_subdirectory(examples/basics)
+
+# Small test program for demo purposes and quick'n'dirty tests.
+add_executable(myprog myprog.cpp)
