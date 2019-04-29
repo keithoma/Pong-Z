@@ -1,6 +1,5 @@
 #include <sgfx/primitives.hpp>
 
-
 void sgfx::plot(window& target, point p, color::rgb_color col)
 {
 }

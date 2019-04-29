@@ -7,7 +7,8 @@
 using namespace pong;
 
 object::object(sgfx::canvas img)
-{}
+{
+}
 
 void object::move_to(sgfx::point position)
 {
