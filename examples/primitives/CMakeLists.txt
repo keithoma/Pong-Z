@@ -26,7 +26,7 @@ find_package(glfw3)
 find_package(GLEW)
 find_package(OpenGL)
 
-add_subdirectory(../../sgfx build)
+#add_subdirectory(../../sgfx build)
 target_link_libraries(sgfx_primitives sgfx glfw GLEW::GLEW OpenGL::GL)
 
 install(TARGETS sgfx_primitives DESTINATION bin)

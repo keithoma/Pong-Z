@@ -13,7 +13,9 @@ struct point {
 };
 
 struct dimension {
-	int value;
+	// [Kei]: I think this should be right
+	int width;
+	int height;
 };
 
 struct rectangle {
