@@ -33,7 +33,9 @@ class window {
 	std::uint16_t width() const { return width_; }
 	std::uint16_t height() const { return height_; }
 
-	auto pixels() { return pixels_.data(); }
+	// API changed from raw pointer to protected container ref
+	std::vector<color::rgb_color>& pixels() noexcept { return pixels_; }
+	const std::vector<color::rgb_color>& pixels() const noexcept { return pixels_; }
 
   private:
 	GLFWwindow* wnd_;
