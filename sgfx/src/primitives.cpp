@@ -6,8 +6,7 @@ void sgfx::plot(window& target, point p, color::rgb_color col)
 	p.x %= main_window.width();
 	p.y %= main_window.height();
 
-	main_window.pixels()[y * main_window.width() + x] = color::white;
-}
+	main_window.pixels()[y * main_window.width() + x] = col
 
 void sgfx::clear(window& target, color::rgb_color col)
 {
