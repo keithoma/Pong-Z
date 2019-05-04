@@ -2,6 +2,11 @@
 
 void sgfx::plot(window& target, point p, color::rgb_color col)
 {
+    // [Kei]: added the three lines, not sure if this is right
+	p.x %= main_window.width();
+	p.y %= main_window.height();
+
+	main_window.pixels()[y * main_window.width() + x] = color::white;
 }
 
 void sgfx::clear(window& target, color::rgb_color col)
