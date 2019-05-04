@@ -8,14 +8,19 @@ struct vec {
 };
 
 struct point {
-	int x;
-	int y;
+	unsigned x;
+	unsigned y;
+
+	bool operator==(const point& p) const noexcept { return x == p.x && y == p.y; }
+	bool operator!=(const point& p) const noexcept { return !(*this == p); }
 };
 
 struct dimension {
-	// [Kei]: I think this should be right
-	int width;
-	int height;
+	unsigned width;
+	unsigned height;
+
+	bool operator==(const dimension& d) const noexcept { return width == d.width && height == d.height; }
+	bool operator!=(const dimension& d) const noexcept { return !(*this == d); }
 };
 
 struct rectangle {
