@@ -1,6 +1,6 @@
-#include <sgfx/primitives.hpp>
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <sgfx/primitives.hpp>
 
 using namespace std;
 
@@ -53,16 +53,21 @@ void sgfx::line(window& target, point p0, point p1, color::rgb_color col)
 	// [Kei]: does not work propperly yet
 	const int delta_x = p0.x - p1.x;
 	const int delta_y = p0.y - p1.y;
-	const float delta_err = abs(delta_y / delta_x);
-	float err = 0.0;
-	unsigned y = p0.y;
 
-	for (unsigned x = p0.x; x < p1.x; ++x) {
-		plot(target, {x, y}, col);
-		err = err + delta_err;
-		if (err >= 0.5) {
-			y = y + (delta_y > 0) - (delta_y < 0);
-			err = err - 1;
+	point p = p0;
+	unsigned q = 2 * delta_x - delta_y;
+
+	const int xInc = p1.x > p0.x ? +1 : -1;
+	const int yInc = p1.y > p0.y ? +1 : -1;
+
+	while (p.x != p1.x) {
+		plot(target, p, col);
+		p.x += xInc;
+		if (q < 0)
+			q = q + 2 * delta_y;
+		else {
+			q = q + 2 * delta_y * delta_x;
+			p.y += yInc;
 		}
 	}
 }
