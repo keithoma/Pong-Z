@@ -2,11 +2,5 @@
 /out
 /build
 /CMakeSettings.json
-.vscode/ipch/2e19217db0efccb0/mmap_address.bin
-.vscode/ipch/830d959de9ed5c3d/mmap_address.bin
-.vscode/ipch/b71959bfbf004303/PRIMITIVES.ipch
-.vscode/ipch/830d959de9ed5c3d/WINDOW.ipch
-.vscode/ipch/fa085d8ef5a1b243/MAIN.ipch
 .vscode/settings.json
-.vscode/ipch/b71959bfbf004303/mmap_address.bin
-.vscode/ipch/fa085d8ef5a1b243/mmap_address.bin
+.vscode/ipch/
