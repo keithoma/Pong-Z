@@ -2,6 +2,7 @@
 
 #include <sgfx/color.hpp>
 #include <sgfx/key.hpp>
+#include <sgfx/widget.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -13,7 +14,7 @@
 
 namespace sgfx {
 
-class window {
+class window : public widget {
   public:
 	window(std::uint16_t w, std::uint16_t h) : window(w, h, "Default") {}
 
@@ -30,12 +31,11 @@ class window {
 
 	void show() const;
 
-	std::uint16_t width() const { return width_; }
-	std::uint16_t height() const { return height_; }
+	std::uint16_t width() const noexcept override { return width_; }
+	std::uint16_t height() const noexcept override { return height_; }
 
-	// API changed from raw pointer to protected container ref
-	std::vector<color::rgb_color>& pixels() noexcept { return pixels_; }
-	const std::vector<color::rgb_color>& pixels() const noexcept { return pixels_; }
+	std::vector<color::rgb_color>& pixels() noexcept override { return pixels_; }
+	const std::vector<color::rgb_color>& pixels() const noexcept override { return pixels_; }
 
   private:
 	GLFWwindow* wnd_;

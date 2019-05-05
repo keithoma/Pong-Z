@@ -4,20 +4,21 @@
 
 using namespace std;
 
-void sgfx::plot(window& target, point p, color::rgb_color col)
+void sgfx::plot(widget& target, point p, color::rgb_color col)
 {
+
 	p.x = min(p.x, static_cast<unsigned>(target.width()) - 1);
 	p.y = min(p.y, static_cast<unsigned>(target.height()) - 1);
 
 	target.pixels()[p.y * target.width() + p.x] = col;
 }
 
-void sgfx::clear(window& target, color::rgb_color col)
+void sgfx::clear(widget& target, color::rgb_color col)
 {
 	fill(begin(target.pixels()), end(target.pixels()), col);
 }
 
-void sgfx::hline(window& target, point p, std::uint16_t length, color::rgb_color col)
+void sgfx::hline(widget& target, point p, std::uint16_t length, color::rgb_color col)
 {
 	if (p.y < target.height()) {
 		const unsigned xEnd = min(p.x + length, static_cast<unsigned>(target.width()));
@@ -28,7 +29,7 @@ void sgfx::hline(window& target, point p, std::uint16_t length, color::rgb_color
 	}
 }
 
-void sgfx::vline(window& target, point p, std::uint16_t length, color::rgb_color col)
+void sgfx::vline(widget& target, point p, std::uint16_t length, color::rgb_color col)
 {
 	if (p.x < target.width()) {
 		const unsigned yEnd = min(p.y + length, static_cast<unsigned>(target.height()));
@@ -39,7 +40,7 @@ void sgfx::vline(window& target, point p, std::uint16_t length, color::rgb_color
 	}
 }
 
-void sgfx::fill(window& target, rectangle rect, color::rgb_color col)
+void sgfx::fill(widget& target, rectangle rect, color::rgb_color col)
 {
 	if (rect.top_left == point{0, 0} && rect.size == dimension{target.width(), target.height()})
 		clear(target, col);
@@ -48,7 +49,7 @@ void sgfx::fill(window& target, rectangle rect, color::rgb_color col)
 			hline(target, {rect.top_left.x, rect.top_left.y + i}, rect.size.width, col);
 }
 
-void sgfx::line(window& target, point p0, point p1, color::rgb_color col)
+void sgfx::line(widget& target, point p0, point p1, color::rgb_color col)
 {
 	// [Kei]: does not work propperly yet
 	const int delta_x = p0.x - p1.x;
