@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <tuple>
 
 #include <sgfx/primitives.hpp>
 
@@ -53,15 +54,15 @@ void fill(widget& target, rectangle rect, color::rgb_color col)
 
 void line(widget& target, point p0, point p1, color::rgb_color col)
 {
-	auto line_low = [](widget& target, point p0, point p1, color::rgb_color col) {
-		int dx = p1.x - p0.x;
-		int dy = p1.y - p0.y;
-		int yi = 1;
-
-		if (dy < 0) {
-			yi = -1;
-			dy = -dy;
-		}
+	auto const line_low = [](widget& target, point p0, point p1, color::rgb_color col) {
+		const auto [dx, dy, yi] = [p0, p1]() {
+			const int dx = p1.x - p0.x;
+			const int dy = p1.y - p0.y;
+			if (dy < 0)
+				return make_tuple(+dx, -dy, -1);
+			else
+				return make_tuple(+dx, +dy, +1);
+		}();
 
 		int big_d = 2 * dy - dx;
 		unsigned y = p0.y;
@@ -78,15 +79,15 @@ void line(widget& target, point p0, point p1, color::rgb_color col)
 		}
 	};
 
-	static auto line_high = [](widget& target, point p0, point p1, color::rgb_color col) {
-		int dx = p1.x - p0.x;
-		int dy = p1.y - p0.y;
-		int xi = 1;
-
-		if (dx < 0) {
-			xi = -1;
-			dx = -dx;
-		}
+	static const auto line_high = [](widget& target, point p0, point p1, color::rgb_color col) {
+		const auto [dx, dy, xi] = [p0, p1]() {
+			const int dx = p1.x - p0.x;
+			const int dy = p1.y - p0.y;
+			if (dx < 0)
+				return make_tuple(-dx, +dy, -1);
+			else
+				return make_tuple(+dx, +dy, +1);
+		}();
 
 		int big_d = 2 * dx - dy;
 		unsigned x = p0.x;
