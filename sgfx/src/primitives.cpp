@@ -104,16 +104,27 @@ void line(widget& target, point p0, point p1, color::rgb_color col)
 		}
 	};
 
-	// optimize first
-
-	// see Bresenham's line algorithm
-	if (labs(p1.y - p0.y) < labs(p1.x - p0.x)) {
+	if (p0 == p1) {
+		// point
+		plot(target, p0, col);
+	}
+	else if (p0.y == p1.y) {
+		// vertical line
+		hline(target, p0, labs(p1.x - p0.x), col);
+	}
+	else if (p0.x == p1.x) {
+		// horizontal line
+		vline(target, p0, labs(p1.y - p0.y), col);
+	}
+	else if (labs(p1.y - p0.y) < labs(p1.x - p0.x)) {
+		// non-trivial line: with the power of Bresenham
 		if (p0.x > p1.x)
 			line_low(target, p1, p0, col);
 		else
 			line_low(target, p0, p1, col);
 	}
 	else {
+		// non-trivial line: with the power of Bresenham
 		if (p0.y > p1.y)
 			line_high(target, p1, p0, col);
 		else
