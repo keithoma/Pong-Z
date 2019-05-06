@@ -41,6 +41,10 @@ int main(int argc, char* argv[])
 
 	std::this_thread::sleep_for(5s);
 
+	// Fadenkreuz
+	line(main_window, {127, 0}, {127, 255}, color::yellow);
+	line(main_window, {0, 127}, {255, 127}, color::yellow);
+
 	line(main_window, {0, 10}, {127, 127}, color::green);
 	line(main_window, {127, 127}, {246, 0}, color::blue);
 	main_window.show();

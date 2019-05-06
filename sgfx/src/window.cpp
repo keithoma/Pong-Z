@@ -105,7 +105,8 @@ void compose_shaders(GLuint& vao_id, GLuint& vbo_id)
 
 using namespace sgfx;
 
-window::window(std::uint16_t w, std::uint16_t h, const char* title) : width_{w}, height_{h}, pixels_(w * h)
+window::window(std::uint16_t w, std::uint16_t h, const char* title)
+	: width_{w}, height_{h}, pixels_(w * h)
 {
 	init();
 

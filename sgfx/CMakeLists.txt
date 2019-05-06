@@ -19,6 +19,10 @@ find_package(glfw3)
 find_package(GLEW)
 find_package(OpenGL)
 
+if(MSVC)
+	add_definitions(-DNOMINMAX)
+endif(MSVC)
+
 set(CMAKE_CXX_STANDARD 17)
 enable_cxx_compiler_flag_if_supported("-Wall")
 enable_cxx_compiler_flag_if_supported("-pedantic")

@@ -2,21 +2,26 @@
 
 #include <sgfx/color.hpp>
 #include <sgfx/primitive_types.hpp>
+#include <sgfx/widget.hpp>
 #include <sgfx/window.hpp>
 
 namespace sgfx {
 
-class canvas {
+class canvas : public widget {
   public:
-	explicit canvas(dimension size);
+	explicit canvas(dimension size) : size_{size}, pixels_{size.width * size.height} {}
 
-	std::uint16_t width() const;
-	std::uint16_t height() const;
+	std::uint16_t width() const noexcept override { return size_.width; }
+	std::uint16_t height() const noexcept override { return size_.height; }
 
-	color::rgb_color* pixels();
-	const color::rgb_color* pixels() const;
+	std::vector<color::rgb_color>& pixels() noexcept override { return pixels_; }
+	const std::vector<color::rgb_color>& pixels() const noexcept override { return pixels_; }
+
+  private:
+	const dimension size_;
+	std::vector<color::rgb_color> pixels_;
 };
 
-void draw(window& target, const canvas& img, point top_left);
+void draw(widget& target, const canvas& img, point top_left);
 
 }  // namespace sgfx
