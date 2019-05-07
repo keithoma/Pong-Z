@@ -27,6 +27,7 @@ class object {
 	 *
 	 * @p image the visual to use when drawing this object
 	 * @p bounds the bounds within this object may be
+	 * @p maxVelocities TODO ...
 	 * @p initialPosition the objects initial position 
 	 */
 	object(

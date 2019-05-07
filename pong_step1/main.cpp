@@ -29,16 +29,16 @@ int main(int argc, char* argv[])
 		ball_img,
 		bounds,
 		{main_window.width() / 2, main_window.height() / 2}, // initial pos
-		{6, 6}, // max velocities
-		{1, 2}  // initial accel
+		{6, 6},              // max velocities
+		{1, 2}               // initial accel
 	};
 
 	// create object for bat using its visual from above
 	object bat{
 		bat_img,
 		{{0, 0}, {20, 768}}, // bounds
-		{0, 400}, // initial position
-		{0, 6} // max velocities
+		{0, 400},            // initial position
+		{0, 6}               // max velocities
 	};
 
 	while (main_window.handle_events() && !main_window.should_close())
