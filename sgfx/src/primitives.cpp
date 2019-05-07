@@ -52,9 +52,39 @@ void fill(widget& target, rectangle rect, color::rgb_color col)
 			hline(target, {rect.top_left.x, rect.top_left.y + i}, rect.size.width, col);
 }
 
+// WIP
+template <const size_t I>
+void internalDrawLine(widget& target, point p0, point p1, color::rgb_color col)
+{
+	const auto [dx, dy, yi] = [p0, p1]() {
+		const int dx = p1.x - p0.x;
+		const int dy = p1.y - p0.y;
+		const int sgn = I == 1 /*y*/ ? -1 : +1; // x: -1, y: +1
+		if (get<I>(p) < 0)
+			return make_tuple(sgn * dx, sgn * dy, 1);
+		else
+			return make_tuple(+dx, +dy, +1);
+	}();
+
+	int big_d = 2 * dy - dx;
+	unsigned y = p0.y;
+
+	for (unsigned x = p0.x; x < p1.x; ++x) {
+		plot(target, {x, y}, col);
+
+		if (big_d > 0) {
+			y += yi;
+			big_d -= 2 * dx;
+		}
+
+		big_d += 2 * dy;
+	}
+}
+
 void line(widget& target, point p0, point p1, color::rgb_color col)
 {
 	auto const line_low = [](widget& target, point p0, point p1, color::rgb_color col) {
+		//internalDrawLine<1>(target, p0, p1, col);
 		const auto [dx, dy, yi] = [p0, p1]() {
 			const int dx = p1.x - p0.x;
 			const int dy = p1.y - p0.y;
@@ -80,6 +110,7 @@ void line(widget& target, point p0, point p1, color::rgb_color col)
 	};
 
 	static const auto line_high = [](widget& target, point p0, point p1, color::rgb_color col) {
+		//internalDrawLine<0>(target, p0, p1, col);
 		const auto [dx, dy, xi] = [p0, p1]() {
 			const int dx = p1.x - p0.x;
 			const int dy = p1.y - p0.y;
