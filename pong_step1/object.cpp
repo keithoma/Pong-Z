@@ -1,20 +1,15 @@
 #include "object.hpp"
-
 #include <sgfx/primitives.hpp>
 
 #include <algorithm>
 
 using namespace pong;
 
-object::object(sgfx::canvas img)
-{
-}
-
-void object::move_to(sgfx::point position)
-{
-}
-
-void object::bind_to(sgfx::rectangle bounds)
+object::object(
+    sgfx::canvas img,
+    sgfx::rectangle bounds,
+    sgfx::point initialPosition,
+    sgfx::vec initialAcceleration)
 {
 }
 

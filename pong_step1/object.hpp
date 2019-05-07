@@ -22,19 +22,42 @@ class object {
 		stuck_bottom_right
 	};
 
-	object(sgfx::canvas img);
+	/**
+	 * Constructs an object.
+	 *
+	 * @p image the visual to use when drawing this object
+	 * @p bounds the bounds within this object may be
+	 * @p initialPosition the objects initial position 
+	 */
+	object(
+		sgfx::canvas image,
+		sgfx::rectangle bounds,
+		sgfx::point initialPosition,
+		sgfx::vec maxVelocities,
+		sgfx::vec initialAcceleration = {0, 0}
+	);
 
-	void move_to(sgfx::point position);
-	void bind_to(sgfx::rectangle bounds);
+	/// Accelerates the object into the given direction (bigger values = faster)
 	void accelerate(sgfx::vec acceleration);
+
 	void limit_velocity(sgfx::vec max_velocities);
 	void set_velocity(sgfx::vec vecocity);
 
+	/// Reflects the ball at its current X position (horizontal wall)
 	void reflect_x();
+
+	/// Reflects the ball at its current Y position (vertical wall)
 	void reflect_y();
 
 	status update_step();
-	void draw(sgfx::canvas_or_window_or_something target) const;
+
+	void draw(sgfx::widget& target) const;
+
+  private:
+	sgfx::canvas image_;
+	sgfx::rectangle bounds_;
+	sgfx::point currentPosition_;
+	sgfx::vec acceleration_;
 };
 
 }  // namespace pong

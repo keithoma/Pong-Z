@@ -16,22 +16,30 @@ int main(int argc, char* argv[])
 					 {static_cast<std::uint16_t>(main_window.width() - 20),
 					  static_cast<std::uint16_t>(main_window.height() - 20)}};
 
+	// create visual for ball:
 	canvas ball_img{{20, 20}};
 	clear(ball_img, color::red);
 
+	// create visual for bat:
 	canvas bat_img{{20, 100}};
 	clear(bat_img, color::blue);
 
-	object ball{ball_img};
-	ball.bind_to(bounds);
-	ball.limit_velocity({6, 6});
-	ball.move_to({main_window.width() / 2, main_window.height() / 2});
-	ball.accelerate({1, 2});
+	// create object for ball using its visual from above
+	object ball{
+		ball_img,
+		bounds,
+		{main_window.width() / 2, main_window.height() / 2}, // initial pos
+		{6, 6}, // max velocities
+		{1, 2}  // initial accel
+	};
 
-	object bat{bat_img};
-	bat.move_to({0, 400});
-	bat.limit_velocity({0, 6});
-	bat.bind_to({{0, 0}, {20, 768}});
+	// create object for bat using its visual from above
+	object bat{
+		bat_img,
+		{{0, 0}, {20, 768}}, // bounds
+		{0, 400}, // initial position
+		{0, 6} // max velocities
+	};
 
 	while (main_window.handle_events() && !main_window.should_close())
 	{
