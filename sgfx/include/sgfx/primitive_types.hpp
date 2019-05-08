@@ -8,12 +8,44 @@ struct vec {
 };
 
 struct point {
-	unsigned x;
-	unsigned y;
+	int x;
+	int y;
 
 	bool operator==(const point& p) const noexcept { return x == p.x && y == p.y; }
 	bool operator!=(const point& p) const noexcept { return !(*this == p); }
+
+	template <const size_t A, const size_t B>
+	static constexpr point indexed(int a, int b)
+	{
+		static_assert(A == 0 || A == 1, "A must be either 0 or 1.");
+		static_assert(B == 0 || B == 1, "B must be either 0 or 1.");
+		static_assert(A != B, "A must not equal to B.");
+		if constexpr (A == 0)
+			return point{a, b};
+		else
+			return point{b, a};
+	}
 };
+
+template <const size_t I>
+constexpr int const& get(point const& p)
+{
+	static_assert(I == 0 || I == 1, "I must be 0 (for X) or 1 (for Y).");
+	if constexpr (I == 0)
+		return p.x;
+	else
+		return p.y;
+}
+
+template <const size_t I>
+constexpr int& get(point& p)
+{
+	static_assert(I == 0 || I == 1, "I must be 0 (for X) or 1 (for Y).");
+	if constexpr (I == 0)
+		return p.x;
+	else
+		return p.y;
+}
 
 struct dimension {
 	unsigned width;
