@@ -27,6 +27,11 @@ struct point {
 	}
 };
 
+constexpr point operator-(point const& a, point const& b)
+{
+	return point{a.x - b.x, a.y - b.y};
+}
+
 template <const size_t I>
 constexpr int const& get(point const& p)
 {
