@@ -17,6 +17,8 @@ class canvas : public widget {
 	std::vector<color::rgb_color>& pixels() noexcept override { return pixels_; }
 	const std::vector<color::rgb_color>& pixels() const noexcept override { return pixels_; }
 
+	static canvas colored(dimension size, color::rgb_color col);
+
   private:
 	const dimension size_;
 	std::vector<color::rgb_color> pixels_;
