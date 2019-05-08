@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_subdirectory(sgfx)
 add_subdirectory(examples/basics)
 add_subdirectory(examples/primitives)
+add_subdirectory(pong)
 
 # Only include the one below when working on them and have them compiling
 #add_subdirectory(pong_step0)
