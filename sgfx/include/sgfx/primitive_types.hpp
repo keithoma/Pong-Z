@@ -4,9 +4,6 @@
 
 namespace sgfx {
 
-struct vec {
-};
-
 struct point {
 	int x;
 	int y;
@@ -26,6 +23,11 @@ struct point {
 			return point{b, a};
 	}
 };
+
+constexpr point operator+(point const& a, point const& b)
+{
+	return point{a.x + b.x, a.y + b.y};
+}
 
 constexpr point operator-(point const& a, point const& b)
 {
@@ -51,6 +53,9 @@ constexpr int& get(point& p)
 	else
 		return p.y;
 }
+
+// vec is a 2 dimensional field, so is point.
+using vec = point;
 
 struct dimension {
 	unsigned width;
