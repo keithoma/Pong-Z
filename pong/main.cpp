@@ -98,14 +98,24 @@ int main(int argc, char* argv[])
 
 		// it should only accelerate if the bats are not on their boundaries
 		// or alternatively, set acceration to 0 if the bats are on their boundaries
+		if (main_window.is_pressed(key::wkey)) {
+			DEBUG("KBD WKey");
+			bat_left.accelerate({0, -1});
+		}
+
+		if (main_window.is_pressed(key::skey)) {
+			DEBUG("KBD SKey");
+			bat_left.accelerate({0, 1});
+		}
+
 		if (main_window.is_pressed(key::up)) {
 			DEBUG("KBD Up");
-			bat_left.accelerate({0, -1});
+			bat_right.accelerate({0, -1});
 		}
 
 		if (main_window.is_pressed(key::down)) {
 			DEBUG("KBD Down");
-			bat_left.accelerate({0, 1});
+			bat_right.accelerate({0, 1});
 		}
 
 		clear(main_window, color::black);

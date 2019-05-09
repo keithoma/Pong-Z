@@ -20,12 +20,22 @@ class key_id {
 
 namespace key {
 
+// do we need this?
 inline constexpr const key_id space{GLFW_KEY_SPACE};
+
+
 inline constexpr const key_id escape{GLFW_KEY_ESCAPE};
+
+// do we need this?
 inline constexpr const key_id left{GLFW_KEY_LEFT};
 inline constexpr const key_id right{GLFW_KEY_RIGHT};
+
 inline constexpr const key_id up{GLFW_KEY_UP};
 inline constexpr const key_id down{GLFW_KEY_DOWN};
+
+// added
+inline constexpr const key_id wkey{GLFW_KEY_W};
+inline constexpr const key_id skey{GLFW_KEY_S};
 
 }  // namespace key
 
