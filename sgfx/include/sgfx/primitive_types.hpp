@@ -11,7 +11,7 @@ struct point {
 	bool operator==(const point& p) const noexcept { return x == p.x && y == p.y; }
 	bool operator!=(const point& p) const noexcept { return !(*this == p); }
 
-	template <const size_t A, const size_t B>
+	template <const std::size_t A, const std::size_t B>
 	static constexpr point indexed(int a, int b)
 	{
 		static_assert(A == 0 || A == 1, "A must be either 0 or 1.");
@@ -34,7 +34,7 @@ constexpr point operator-(point const& a, point const& b)
 	return point{a.x - b.x, a.y - b.y};
 }
 
-template <const size_t I>
+template <const std::size_t I>
 constexpr int const& get(point const& p)
 {
 	static_assert(I == 0 || I == 1, "I must be 0 (for X) or 1 (for Y).");
@@ -44,7 +44,7 @@ constexpr int const& get(point const& p)
 		return p.y;
 }
 
-template <const size_t I>
+template <const std::size_t I>
 constexpr int& get(point& p)
 {
 	static_assert(I == 0 || I == 1, "I must be 0 (for X) or 1 (for Y).");

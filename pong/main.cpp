@@ -13,7 +13,13 @@ using namespace sgfx;
 using namespace pong;
 using namespace std;
 
-#define DEBUG(msg, ...)                    \
+#define DEBUG(msg) \
+	do {                                   \
+		fprintf(stderr, msg);              \
+		fprintf(stderr, "\n");             \
+	} while (0)
+
+#define DEBUGF(msg, ...)                   \
 	do {                                   \
 		fprintf(stderr, msg, __VA_ARGS__); \
 		fprintf(stderr, "\n");             \
@@ -21,8 +27,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	auto main_window = window{1024, 768};
-
 	// create visual for ball:
 	auto const ball_img = canvas::colored({20, 20}, color::red);
 
@@ -48,8 +52,10 @@ int main(int argc, char* argv[])
 		{0, 6}                // max velocities
 	};
 
+	auto main_window = window{1024, 768};
+
 	while (main_window.handle_events() && !main_window.should_close()) {
-		DEBUG("bat %s; ball %s\n", bat.debug_string().c_str(), ball.debug_string().c_str());
+		DEBUGF("bat %s; ball %s\n", bat.debug_string().c_str(), ball.debug_string().c_str());
 		switch (ball.update_step()) {
 			case object::status::free:
 				break;
@@ -83,6 +89,7 @@ int main(int argc, char* argv[])
 			DEBUG("KBD Up");
 			bat.accelerate({0, -1});
 		}
+
 		if (main_window.is_pressed(key::down)) {
 			DEBUG("KBD Down");
 			bat.accelerate({0, 1});

@@ -27,7 +27,7 @@ void clear(widget& target, color::rgb_color col)
 void hline(widget& target, point p, std::uint16_t length, color::rgb_color col)
 {
 	if (p.y < target.height()) {
-		const unsigned xEnd = min(p.x + length, static_cast<int>(target.width()));
+		const int xEnd = min(p.x + length, static_cast<int>(target.width()));
 		while (p.x < xEnd) {
 			plot(target, p, col);
 			++p.x;
@@ -38,7 +38,7 @@ void hline(widget& target, point p, std::uint16_t length, color::rgb_color col)
 void vline(widget& target, point p, std::uint16_t length, color::rgb_color col)
 {
 	if (p.x < target.width()) {
-		const unsigned yEnd = min(p.y + length, static_cast<int>(target.height()));
+		const int yEnd = min(p.y + length, static_cast<int>(target.height()));
 		while (p.y < yEnd) {
 			plot(target, p, col);
 			++p.y;
@@ -51,8 +51,8 @@ void fill(widget& target, rectangle rect, color::rgb_color col)
 	if (rect.top_left == point{0, 0} && rect.size == dimension{target.width(), target.height()})
 		clear(target, col);
 	else
-		for (int i = 0; i < rect.size.height; ++i)
-			hline(target, {rect.top_left.x, rect.top_left.y + i}, rect.size.width, col);
+		for (unsigned i = 0; i < rect.size.height; ++i)
+			hline(target, {rect.top_left.x, rect.top_left.y + static_cast<int>(i)}, rect.size.width, col);
 }
 
 /**
@@ -70,7 +70,7 @@ constexpr void breseham(point p0, point p1, std::function<void(point const&)> si
 	static_assert(A == 0 || A == 1, "A must be 0 (for X) or 1 (for Y).");
 	static_assert(B == 0 || B == 1, "B must be 0 (for X) or 1 (for Y).");
 	static_assert(A != B, "A must not be equal to B.");
-	assert(p0.y <= p1.y, "Must draw from top to bottom (p0.y <= p1.y).");
+	assert(p0.y <= p1.y && "Must draw from top to bottom (p0.y <= p1.y).");
 
 	// compute delta x/y and the increment value for the walking coordinate
 	auto const [delta, increment] = [](auto p0, auto p1) {
@@ -93,7 +93,7 @@ constexpr void breseham(point p0, point p1, std::function<void(point const&)> si
 		++get<A>(p);
 		big_d += 2 * get<B>(delta);
 	}
-};
+}
 
 void line(widget& target, point p0, point p1, color::rgb_color col)
 {
