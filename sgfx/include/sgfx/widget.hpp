@@ -17,6 +17,9 @@ class widget {
 
 	virtual std::vector<color::rgb_color>& pixels() noexcept = 0;
 	virtual const std::vector<color::rgb_color>& pixels() const noexcept = 0;
+
+	color::rgb_color& operator[](point const& p) { return pixels()[p.y * width() + p.x]; }
+	color::rgb_color const& operator[](point const& p) const { return pixels()[p.y * width() + p.x]; }
 };
 
 }  // namespace sgfx
