@@ -27,6 +27,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	auto main_window = window{1024, 768};
+
 	// create visual for ball:
 	auto const ball_img = canvas::colored({20, 20}, color::red);
 
@@ -51,8 +53,6 @@ int main(int argc, char* argv[])
 		{0, 400},             // initial position
 		{0, 6}                // max velocities
 	};
-
-	auto main_window = window{1024, 768};
 
 	while (main_window.handle_events() && !main_window.should_close()) {
 		DEBUGF("bat %s; ball %s\n", bat.debug_string().c_str(), ball.debug_string().c_str());
