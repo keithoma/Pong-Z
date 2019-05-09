@@ -31,12 +31,12 @@ void object::set_velocity(sgfx::vec velocity)
 
 void object::reflect_x()
 {
-	velocity_ = {0, 0};
+	set_velocity({- velocity_.x, velocity_.y});
 }
 
 void object::reflect_y()
 {
-	velocity_ = {0, 0};
+	set_velocity({velocity_.x, - velocity_.y});
 }
 
 object::status object::update_step()
@@ -75,7 +75,7 @@ object::status object::update_step()
 		status_ = status::stuck_bottom_right;
 	}
 
-	// side cases; sets 'status_' to 'stuck
+	// side cases; sets 'status_' to 'stuck_left', 'stuck_right', 'stuck_top' or 'stuck_bottom'
 	else if (position_.x == bounds_.top_left.x) {
 		status_ = status::stuck_left;
 	}
@@ -89,7 +89,7 @@ object::status object::update_step()
 		status_ = status::stuck_bottom;
 	} 
 	
-	// in all other cases; which therefore means the ball is not stuck
+	// in all other cases, which therefore means the ball is not stuck, set 'status_' to 'free'
 	else {
 		status_ = status::free;
 	}
