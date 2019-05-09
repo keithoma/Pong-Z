@@ -4,20 +4,22 @@
 #include <sgfx/window.hpp>
 
 #include <algorithm>
+#include <cstdlib>
+
+using namespace sgfx;
+using namespace std;
 
 int main(int argc, char* argv[])
 {
-	using namespace sgfx;
-
 	window main_window{1024, 768};
 
 	canvas img0{{50, 50}};
-	std::fill_n(img0.pixels(), img0.width() * img0.height() / 2, color::gray);
-	std::fill_n(img0.pixels() + img0.width() * img0.height() / 2, img0.width() * img0.height() / 2,
+	std::fill_n(img0.pixels().data(), img0.width() * img0.height() / 2, color::gray);
+	std::fill_n(img0.pixels().data() + img0.width() * img0.height() / 2, img0.width() * img0.height() / 2,
 				color::cyan);
 
 	auto img1 = img0;
-	std::fill_n(img1.pixels() + img1.width() * img1.height() / 2, img1.width() * img1.height() / 2,
+	std::fill_n(img1.pixels().data() + img1.width() * img1.height() / 2, img1.width() * img1.height() / 2,
 				color::magenta);
 
 	point pos0{0, 0}, pos1{main_window.width() - img1.width(), 0};
@@ -41,6 +43,7 @@ int main(int argc, char* argv[])
 			dx0 = -4;
 
 		dx1 = -dx0;
+		_sleep(100);
 	};
 
 	return 0;
