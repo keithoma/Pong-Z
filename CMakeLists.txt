@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
-project(CxxAsNewLang)
+project(PongGame)
 
-set(CMAKE_CXX_STANDARD 17)
-
+option(SGFX_EXAMPLES "Build SGFX examples" ON)
 add_subdirectory(sgfx)
-add_subdirectory(examples/basics)
-add_subdirectory(examples/primitives)
 add_subdirectory(pong)
 
-# Only include the one below when working on them and have them compiling
-#add_subdirectory(pong_step0)
-#add_subdirectory(pong_step1)
-
-# Small test program for demo purposes and quick'n'dirty tests.
-add_executable(myprog myprog.cpp)
+if(SGFX_EXAMPLES)
+	add_subdirectory(examples/basics)
+	add_subdirectory(examples/primitives)
+endif()
