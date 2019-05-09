@@ -55,6 +55,14 @@ int main(int argc, char* argv[])
 		                                                      // -50 because the bat height is 100
 	};
 
+	auto bat_right = object{
+		bat_img,
+		{{unsigned(main_window.width() - 20), 0}, 
+		 {unsigned(main_window.width() - 20), unsigned(main_window.height() - 100)}}, // boundaries
+		{0, 6},                                                             // max velocities
+		{main_window.width() - 20, main_window.height() / 2 - 50},          // initial position;
+		                                                        // ^ -50 because the bat height is 100
+	};
 
 	while (main_window.handle_events() && !main_window.should_close()) {
 		DEBUGF("bat %s; ball %s\n", bat_left.debug_string().c_str(), ball.debug_string().c_str());
@@ -87,6 +95,9 @@ int main(int argc, char* argv[])
 		if (main_window.is_pressed(key::escape))
 			break;
 
+
+		// it should only accelerate if the bats are not on their boundaries
+		// or alternatively, set acceration to 0 if the bats are on their boundaries
 		if (main_window.is_pressed(key::up)) {
 			DEBUG("KBD Up");
 			bat_left.accelerate({0, -1});
@@ -99,6 +110,7 @@ int main(int argc, char* argv[])
 
 		clear(main_window, color::black);
 		bat_left.draw(main_window);
+		bat_right.draw(main_window);
 		ball.draw(main_window);
 
 		main_window.show();
