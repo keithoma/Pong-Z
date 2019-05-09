@@ -31,12 +31,12 @@ void object::set_velocity(sgfx::vec velocity)
 
 void object::reflect_x()
 {
-	// TODO impl
+	velocity_ = {0, 0};
 }
 
 void object::reflect_y()
 {
-	// TODO impl
+	velocity_ = {0, 0};
 }
 
 object::status object::update_step()
@@ -56,7 +56,43 @@ object::status object::update_step()
 	position_.y =
 		clamp(bounds_.top_left.y, position_.y + velocity_.y, bounds_.top_left.y + bounds_.size.height);
 
-	// TODO: update status_
+	// edge cases; sets 'status_' to 'stuck_top_left', 'stuck_bottom_left', 'stuck_top_right' or
+	// 'stuck_bottom_right'
+	if (position_.x == bounds_.top_left.x && 
+	    position_.y == bounds_.top_left.y) {
+		status_ = status::stuck_top_left;
+	}
+	else if (position_.x == bounds_.top_left.x && 
+	         position_.y == bounds_.top_left.y + bounds_.size.height) {
+		status_ = status::stuck_bottom_left;
+	}
+	else if (position_.x == bounds_.top_left.x + bounds_.size.width && 
+	         position_.y == bounds_.top_left.y) {
+		status_ = status::stuck_top_right;
+	}
+	else if (position_.x == bounds_.top_left.x + bounds_.size.width && 
+	         position_.y == bounds_.top_left.y + bounds_.size.height) {
+		status_ = status::stuck_bottom_right;
+	}
+
+	// side cases; sets 'status_' to 'stuck
+	else if (position_.x == bounds_.top_left.x) {
+		status_ = status::stuck_left;
+	}
+	else if (position_.x == bounds_.top_left.x + bounds_.size.width) {
+		status_ = status::stuck_right;
+	}
+	else if (position_.y == bounds_.top_left.y) {
+		status_ = status::stuck_top;
+	}
+	else if (position_.y == bounds_.top_left.y + bounds_.size.height) {
+		status_ = status::stuck_bottom;
+	} 
+	
+	// in all other cases; which therefore means the ball is not stuck
+	else {
+		status_ = status::free;
+	}
 	return status_;
 }
 

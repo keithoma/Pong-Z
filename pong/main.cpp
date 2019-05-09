@@ -41,6 +41,8 @@ int main(int argc, char* argv[])
 		rectangle{{10, 10},
 				  {static_cast<std::uint16_t>(main_window.width() - 20),
 				   static_cast<std::uint16_t>(main_window.height() - 20)}},
+				                                              // ^ bounds
+		// (Kei) I think the line below does not work correctly
 		{main_window.width() / 2, main_window.height() / 2},  // initial pos
 		{6, 6},                                               // max velocities
 		{1, 2}                                                // initial accel
