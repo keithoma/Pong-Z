@@ -40,24 +40,24 @@ int main(int argc, char* argv[])
 		ball_img,
 		rectangle{{10, 10},
 				  {static_cast<std::uint16_t>(main_window.width() - 20),
-				   static_cast<std::uint16_t>(main_window.height() - 20)}},
-				                                              // ^ bounds
-		// (Kei) I think the line below does not work correctly
-		{main_window.width() / 2, main_window.height() / 2},  // initial pos
-		{6, 6},                                               // max velocities
-		{1, 2}                                                // initial accel
+				   static_cast<std::uint16_t>(main_window.height() - 20)}}, // boundaries
+		{6, 6},																// max velocity
+		{main_window.width() / 2, main_window.height() / 2},                // initial pos
+		{1, 2}                                                              // initial accel
 	};
 
 	// create object for bat using its visual from above
-	auto bat = object{
+	auto bat_left = object{
 		bat_img,
-		{{0, 0}, {20, 768}},  // bounds
-		{0, 400},             // initial position
-		{0, 6}                // max velocities
+		{{0, 0}, {20, unsigned(main_window.height() - 100)}}, // boundaries
+		{0, 6},                                               // max velocities
+		{0, main_window.height() / 2 - 50},                   // initial position;
+		                                                      // -50 because the bat height is 100
 	};
 
+
 	while (main_window.handle_events() && !main_window.should_close()) {
-		DEBUGF("bat %s; ball %s\n", bat.debug_string().c_str(), ball.debug_string().c_str());
+		DEBUGF("bat %s; ball %s\n", bat_left.debug_string().c_str(), ball.debug_string().c_str());
 		switch (ball.update_step()) {
 			case object::status::free:
 				break;
@@ -82,23 +82,23 @@ int main(int argc, char* argv[])
 				DEBUG("should never happen");
 		}
 
-		bat.update_step();
+		bat_left.update_step();
 
 		if (main_window.is_pressed(key::escape))
 			break;
 
 		if (main_window.is_pressed(key::up)) {
 			DEBUG("KBD Up");
-			bat.accelerate({0, -1});
+			bat_left.accelerate({0, -1});
 		}
 
 		if (main_window.is_pressed(key::down)) {
 			DEBUG("KBD Down");
-			bat.accelerate({0, 1});
+			bat_left.accelerate({0, 1});
 		}
 
 		clear(main_window, color::black);
-		bat.draw(main_window);
+		bat_left.draw(main_window);
 		ball.draw(main_window);
 
 		main_window.show();
