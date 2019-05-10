@@ -24,9 +24,27 @@ void object::accelerate(sgfx::vec acceleration)
 	set_velocity(velocity_ + acceleration);
 }
 
+
+// @@chris: kann man bestimmt schöner machen
+// 		    vielleicht mit abs()
 void object::set_velocity(sgfx::vec velocity)
 {
-	velocity_ = {min(velocity.x, maxVelocities_.x), min(velocity.y, maxVelocities_.y)};
+	int velox;
+	int veloy;
+
+	if (velocity.x < 0) {
+		velox = max(velocity.x, - maxVelocities_.x);
+	} else {
+		velox = min(velocity.x, maxVelocities_.x);
+	}
+
+	if (velocity.y < 0) {
+		veloy = max(velocity.y, - maxVelocities_.y);
+	} else {
+		veloy = min(velocity.y, maxVelocities_.y);
+	}
+
+	velocity_ = {velox, veloy};
 }
 
 void object::reflect_x()
