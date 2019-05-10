@@ -66,8 +66,10 @@ void object::reset_game(sgfx::point center)
 	random_device random_device;
 	mt19937 random_engine{random_device()};
 	uniform_int_distribution<int> distribution{1, 8};
-	uniform_int_distribution<int> easter{1, 100};
 
+	set_velocity({-6, 6});
+
+	/*
 	switch (distribution(random_engine)) {
 		// hard velocity
 		case 1:
@@ -85,18 +87,19 @@ void object::reset_game(sgfx::point center)
 
 		// easy velocity
 		case 5:
-			velocity_ = {2, 3};
+			velocity_ = {4, 5};
 			break;
 		case 6:
-			velocity_ = {2, -3};
+			velocity_ = {4, -5};
 			break;
 		case 7:
-			velocity_ = {-2, 3};
+			velocity_ = {-4, 5};
 			break;
 		case 8:
-			velocity_ = {-2, -3};
+			velocity_ = {-4, -5};
 			break;
 	}
+	*/
 }
 
 object::status object::update_step()

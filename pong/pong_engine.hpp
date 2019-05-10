@@ -11,6 +11,13 @@ enum class bat_move {
 	down,
 };
 
+
+// not used right now
+enum class player {
+	left,
+	right,
+};
+
 /**
  * Pong Game Engine.
  */
@@ -42,6 +49,9 @@ class engine {
 	object ball_;
 	object left_bat_;
 	object right_bat_;
+
+	bool collision_logic_left();
+	bool collision_logic_right();
 };
 
 }  // namespace pong

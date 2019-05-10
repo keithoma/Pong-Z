@@ -1,5 +1,8 @@
 #include "pong_engine.hpp"
 
+#include <vector>
+#include <algorithm>
+
 #define DEBUG(msg)                       \
 	do {                                 \
 		fprintf(stderr, "engine: " msg); \
@@ -12,6 +15,8 @@
 		fprintf(stderr, "\n");                        \
 	} while (0)
 
+using namespace std;
+
 namespace pong {
 
 engine::engine(int sizeX, int sizeY, unsigned max_goals)
@@ -23,7 +28,7 @@ engine::engine(int sizeX, int sizeY, unsigned max_goals)
 		   {static_cast<std::uint16_t>(sizeX - 20), static_cast<std::uint16_t>(sizeY - 20)}},  // boundaries
 		  {6, 6},                                                                              // max velocity
 		  {sizeX / 2, sizeY / 2},                                                              // initial pos
-		  {1, 2}  // initial accel
+		  {-6, 0}  // initial accel
 	  },
 	  left_bat_{
 		  {{0, 0}, {0, sizeY - 100}},  // boundaries
@@ -59,6 +64,39 @@ void engine::move_right_bat(bat_move direction)
 		right_bat_.accelerate({0, +1});
 }
 
+
+// @@chris kann man bestimmt mit einem pointer in eine funktion zusammenfassen
+
+bool engine::collision_logic_left()
+{
+	const int bat_top = left_bat_.position().y;
+	const int bat_bot = left_bat_.position().y + 100;
+	const int ball_top = ball_.position().y;
+	const int ball_bot = ball_.position().y + 20;
+
+	if (bat_top > ball_top && bat_bot > ball_top ||
+	    bat_bot < ball_bot && bat_top < ball_bot) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+bool engine::collision_logic_right()
+{
+	const int bat_top = right_bat_.position().y;
+	const int bat_bot = right_bat_.position().y + 100;
+	const int ball_top = ball_.position().y;
+	const int ball_bot = ball_.position().y + 20;
+
+	if (bat_top > ball_top && bat_bot > ball_top ||
+	    bat_bot < ball_bot && bat_top < ball_bot) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 void engine::update()
 {
 	DEBUGF("bat %s; ball %s\n", left_bat_.debug_string().c_str(), ball_.debug_string().c_str());
@@ -72,11 +110,19 @@ void engine::update()
 			break;
 		case object::status::stuck_left:
 			DEBUG("stuck L");
-			ball_.reflect_x();
+
+			if (collision_logic_left() == true) {
+				ball_.reflect_x();
+			}
+			
 			break;
 		case object::status::stuck_right:
 			DEBUG("stuck R");
-			ball_.reflect_x();
+
+			if (collision_logic_right() == true) {
+				ball_.reflect_x();
+			}
+
 			break;
 		case object::status::stuck_top:
 		case object::status::stuck_bottom:
