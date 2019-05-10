@@ -4,6 +4,7 @@
 #include <sgfx/color.hpp>
 #include <sgfx/key.hpp>
 #include <sgfx/primitives.hpp>
+#include <sgfx/canvas.hpp>
 #include <sgfx/window.hpp>
 
 #include <cassert>
@@ -37,7 +38,6 @@ int main(int argc, char* argv[])
 
 	// create object for ball using its visual from above
 	auto ball = object{
-		ball_img,
 		rectangle{{10, 10},
 				  {static_cast<std::uint16_t>(main_window.width() - 20),
 				   static_cast<std::uint16_t>(main_window.height() - 20)}}, // boundaries
@@ -50,7 +50,6 @@ int main(int argc, char* argv[])
 	// create object for bat using its visual from above
 	// max velocity should be bounded in to negative values as well
 	auto bat_left = object{
-		bat_img,
 		{{0, 0}, {0, main_window.height() - 100}},            // boundaries
 		{0, 6},                                               // max velocities
 		{0, main_window.height() / 2 - 50},                   // initial position;
@@ -58,7 +57,6 @@ int main(int argc, char* argv[])
 	};
 
 	auto bat_right = object{
-		bat_img,
 		{{main_window.width() - 20, 0},
 		 {main_window.width() - 20, main_window.height() - 100}},  // boundaries
 		{0, 6},                                                    // max velocities
@@ -125,9 +123,9 @@ int main(int argc, char* argv[])
 		}
 
 		clear(main_window, color::black);
-		bat_left.draw(main_window);
-		bat_right.draw(main_window);
-		ball.draw(main_window);
+		pong::draw(bat_left, bat_img, main_window);
+		pong::draw(bat_right, bat_img, main_window);
+		pong::draw(ball, ball_img, main_window);
 
 		main_window.show();
 	};

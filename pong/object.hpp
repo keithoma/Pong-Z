@@ -1,11 +1,15 @@
 #ifndef PONG_OBJECT_H
 #define PONG_OBJECT_H
 
-#include <sgfx/canvas.hpp>
 #include <sgfx/primitive_types.hpp>
 
 #include <optional>
 #include <string>
+
+namespace sgfx {
+class widget;
+class canvas;
+}
 
 namespace pong {
 
@@ -31,7 +35,7 @@ class object {
 	 * @p maxVelocities maximum velocity per coordinate this object may gain
 	 * @p initialPosition the objects initial position
 	 */
-	object(sgfx::canvas image, sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
+	object(sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
 		   sgfx::vec initialAcceleration = {0, 0});
 
 	/// Accelerates the object by increasing its velocity by given @p acceleration.
@@ -52,8 +56,6 @@ class object {
 	/// Updates its current position with regard to acceleration & bounds
 	status update_step();
 
-	void draw(sgfx::widget& target) const;
-
 	sgfx::point const& position() const noexcept { return position_; }
 	sgfx::vec const& velocity() const noexcept { return velocity_; }
 
@@ -66,13 +68,14 @@ class object {
 	}
 
   private:
-	const sgfx::canvas image_;
 	const sgfx::rectangle bounds_;
 	const sgfx::vec maxVelocities_;
 	sgfx::point position_;
 	sgfx::vec velocity_;
 	status status_;
 };
+
+void draw(object const& object, sgfx::canvas const& image, sgfx::widget& target);
 
 }  // namespace pong
 
