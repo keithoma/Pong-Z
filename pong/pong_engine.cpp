@@ -48,8 +48,7 @@ engine::engine(int sizeX, int sizeY, unsigned max_goals)
 {
 }
 
-// it should only accelerate if the bats are not on their boundaries
-// or alternatively, set acceration to 0 if the bats are on their boundaries
+// @@BUG: the bats should only move if a key is pressed
 
 void engine::move_left_bat(bat_move direction)
 {
@@ -190,6 +189,8 @@ void engine::update()
 			DEBUG("stuck T/B");
 			ball_.reflect_y();
 			break;
+
+		//@BUG: collision logic need to be implemented here
 		case object::status::stuck_top_left:
 		case object::status::stuck_bottom_left:
 		case object::status::stuck_top_right:
