@@ -51,7 +51,7 @@ void fill(widget& target, rectangle rect, color::rgb_color col)
 	if (rect.top_left == point{0, 0} && rect.size == dimension{target.width(), target.height()})
 		clear(target, col);
 	else
-		for (unsigned i = 0; i < rect.size.height; ++i)
+		for (int i = 0; i < rect.size.height; ++i)
 			hline(target, {rect.top_left.x, rect.top_left.y + static_cast<int>(i)}, rect.size.width, col);
 }
 

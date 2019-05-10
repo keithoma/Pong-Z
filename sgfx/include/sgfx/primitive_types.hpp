@@ -58,8 +58,8 @@ constexpr int& get(point& p)
 using vec = point;
 
 struct dimension {
-	unsigned width;
-	unsigned height;
+	int width;
+	int height;
 
 	bool operator==(const dimension& d) const noexcept { return width == d.width && height == d.height; }
 	bool operator!=(const dimension& d) const noexcept { return !(*this == d); }

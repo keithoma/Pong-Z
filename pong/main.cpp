@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 	// max velocity should be bounded in to negative values as well
 	auto bat_left = object{
 		bat_img,
-		{{0, 0}, {0, unsigned(main_window.height() - 100)}}, // boundaries
+		{{0, 0}, {0, main_window.height() - 100}},            // boundaries
 		{0, 6},                                               // max velocities
 		{0, main_window.height() / 2 - 50},                   // initial position;
 		                                                      // -50 because the bat height is 100
@@ -58,11 +58,11 @@ int main(int argc, char* argv[])
 
 	auto bat_right = object{
 		bat_img,
-		{{unsigned(main_window.width() - 20), 0}, 
-		 {unsigned(main_window.width() - 20), unsigned(main_window.height() - 100)}}, // boundaries
-		{0, 6},                                                             // max velocities
-		{main_window.width() - 20, main_window.height() / 2 - 50},          // initial position;
-		                                                        // ^ -50 because the bat height is 100
+		{{main_window.width() - 20, 0},
+		 {main_window.width() - 20, main_window.height() - 100}},  // boundaries
+		{0, 6},                                                    // max velocities
+		{main_window.width() - 20, main_window.height() / 2 - 50}, // initial position;
+		                                                           // ^ -50 because the bat height is 100
 	};
 
 	while (main_window.handle_events() && !main_window.should_close()) {

@@ -9,7 +9,7 @@ namespace sgfx {
 
 class canvas : public widget {
   public:
-	explicit canvas(dimension size) : size_{size}, pixels_{size.width * size.height} {}
+	explicit canvas(dimension size) : size_{size}, pixels_{static_cast<unsigned>(size.width * size.height)} {}
 
 	std::uint16_t width() const noexcept override { return size_.width; }
 	std::uint16_t height() const noexcept override { return size_.height; }
