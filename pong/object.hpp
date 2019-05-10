@@ -46,6 +46,9 @@ class object {
 	/// Reflects the ball at its current Y position (vertical wall)
 	void reflect_y();
 
+	/// resets the game by moving the ball to the center and asigning a random preset velocity
+	void reset_game(sgfx::point center);
+
 	/// Updates its current position with regard to acceleration & bounds
 	status update_step();
 

@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <climits>
+#include <random>
 
 using namespace std;
 
@@ -55,6 +56,49 @@ void object::reflect_x()
 void object::reflect_y()
 {
 	set_velocity({velocity_.x, - velocity_.y});
+}
+
+
+// @@chris: da diese methode nur für den Ball gebraucht wird, sollte man hier
+//          Vererbung benutzen?
+void object::reset_game(sgfx::point center)
+{
+	position_ = center;
+
+	random_device random_device;
+	mt19937 random_engine{random_device()};
+	uniform_int_distribution<int> distribution{1, 8};
+	uniform_int_distribution<int> easter{1, 100};
+
+	switch (distribution(random_engine)) {
+		// hard velocity
+		case 1:
+			velocity_ = {3, 4};
+			break;
+		case 2:
+			velocity_ = {3, -4};
+			break;
+		case 3:
+			velocity_ = {-3, 4};
+			break;
+		case 4:
+			velocity_ = {-3, -4};
+			break;
+
+		// easy velocity
+		case 5:
+			velocity_ = {2, 3};
+			break;
+		case 6:
+			velocity_ = {2, -3};
+			break;
+		case 7:
+			velocity_ = {-2, 3};
+			break;
+		case 8:
+			velocity_ = {-2, -3};
+			break;
+	}
 }
 
 object::status object::update_step()

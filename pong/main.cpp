@@ -45,6 +45,7 @@ int main(int argc, char* argv[])
 		{main_window.width() / 2, main_window.height() / 2},                // initial pos
 		{1, 2}                                                              // initial accel
 	};
+	ball.reset_game({main_window.width() / 2, main_window.height() / 2});
 
 	// create object for bat using its visual from above
 	// max velocity should be bounded in to negative values as well
@@ -71,8 +72,11 @@ int main(int argc, char* argv[])
 			case object::status::free:
 				break;
 			case object::status::stuck_left:
+				DEBUG("stuck L");
+				ball.reflect_x();
+				break;
 			case object::status::stuck_right:
-				DEBUG("stuck L/R");
+				DEBUG("stuck R");
 				ball.reflect_x();
 				break;
 			case object::status::stuck_top:
