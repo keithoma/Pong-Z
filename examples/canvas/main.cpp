@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
 			dx0 = -4;
 
 		dx1 = -dx0;
-		_sleep(100);
 	};
 
 	return 0;
