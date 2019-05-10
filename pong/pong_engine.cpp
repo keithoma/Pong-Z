@@ -1,0 +1,98 @@
+#include "pong_engine.hpp"
+
+#define DEBUG(msg)                       \
+	do {                                 \
+		fprintf(stderr, "engine: " msg); \
+		fprintf(stderr, "\n");           \
+	} while (0)
+
+#define DEBUGF(msg, ...)                              \
+	do {                                              \
+		fprintf(stderr, "engine: " msg, __VA_ARGS__); \
+		fprintf(stderr, "\n");                        \
+	} while (0)
+
+namespace pong {
+
+engine::engine(int sizeX, int sizeY, unsigned max_goals)
+	: max_goals_{max_goals},
+	  goals_left_{0},
+	  goals_right_{0},
+	  ball_{
+		  {{10, 10},
+		   {static_cast<std::uint16_t>(sizeX - 20), static_cast<std::uint16_t>(sizeY - 20)}},  // boundaries
+		  {6, 6},                                                                              // max velocity
+		  {sizeX / 2, sizeY / 2},                                                              // initial pos
+		  {1, 2}  // initial accel
+	  },
+	  left_bat_{
+		  {{0, 0}, {0, sizeY - 100}},  // boundaries
+		  {0, 6},                      // max velocities
+		  {0, sizeY / 2 - 50},         // initial position;
+									   // -50 because the bat height is 100
+	  },
+	  right_bat_{
+		  {{sizeX - 20, 0}, {sizeX - 20, sizeY - 100}},  // boundaries
+		  {0, 6},                                        // max velocities
+		  {sizeX - 20, sizeY / 2 - 50},                  // initial position;
+														 // ^ -50 because the bat height is 100
+	  }
+{
+}
+
+// it should only accelerate if the bats are not on their boundaries
+// or alternatively, set acceration to 0 if the bats are on their boundaries
+
+void engine::move_left_bat(bat_move direction)
+{
+	if (direction == bat_move::up)
+		left_bat_.accelerate({0, -1});
+	else
+		left_bat_.accelerate({0, +1});
+}
+
+void engine::move_right_bat(bat_move direction)
+{
+	if (direction == bat_move::up)
+		right_bat_.accelerate({0, -1});
+	else
+		right_bat_.accelerate({0, +1});
+}
+
+void engine::update()
+{
+	DEBUGF("bat %s; ball %s\n", left_bat_.debug_string().c_str(), ball_.debug_string().c_str());
+
+	// TODO: make sure we don't let things move too fast because of faster CPU (by providing own timer)
+	left_bat_.update_step();
+	right_bat_.update_step();
+
+	switch (ball_.update_step()) {
+		case object::status::free:
+			break;
+		case object::status::stuck_left:
+			DEBUG("stuck L");
+			ball_.reflect_x();
+			break;
+		case object::status::stuck_right:
+			DEBUG("stuck R");
+			ball_.reflect_x();
+			break;
+		case object::status::stuck_top:
+		case object::status::stuck_bottom:
+			DEBUG("stuck T/B");
+			ball_.reflect_y();
+			break;
+		case object::status::stuck_top_left:
+		case object::status::stuck_bottom_left:
+		case object::status::stuck_top_right:
+		case object::status::stuck_bottom_right:
+			DEBUG("reflect on corner");
+			ball_.reflect_x();
+			ball_.reflect_y();
+		default:
+			DEBUG("should never happen");
+	}
+}
+
+}  // namespace pong

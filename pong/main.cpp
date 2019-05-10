@@ -1,4 +1,5 @@
 #include "object.hpp"
+#include "pong_engine.hpp"
 
 #include <sgfx/canvas.hpp>
 #include <sgfx/color.hpp>
@@ -36,96 +37,32 @@ int main(int argc, char* argv[])
 	// create visual for bat:
 	auto const bat_img = canvas::colored({20, 100}, color::blue);
 
-	// create object for ball using its visual from above
-	auto ball = object{
-		rectangle{{10, 10},
-				  {static_cast<std::uint16_t>(main_window.width() - 20),
-				   static_cast<std::uint16_t>(main_window.height() - 20)}}, // boundaries
-		{6, 6},																// max velocity
-		{main_window.width() / 2, main_window.height() / 2},                // initial pos
-		{1, 2}                                                              // initial accel
-	};
-	ball.reset_game({main_window.width() / 2, main_window.height() / 2});
+	auto engine = pong::engine{1024, 768, 8};
 
-	// create object for bat using its visual from above
-	// max velocity should be bounded in to negative values as well
-	auto bat_left = object{
-		{{0, 0}, {0, main_window.height() - 100}},            // boundaries
-		{0, 6},                                               // max velocities
-		{0, main_window.height() / 2 - 50},                   // initial position;
-		                                                      // -50 because the bat height is 100
-	};
-
-	auto bat_right = object{
-		{{main_window.width() - 20, 0},
-		 {main_window.width() - 20, main_window.height() - 100}},  // boundaries
-		{0, 6},                                                    // max velocities
-		{main_window.width() - 20, main_window.height() / 2 - 50}, // initial position;
-		                                                           // ^ -50 because the bat height is 100
-	};
+	// TODO: ball.reset_game({main_window.width() / 2, main_window.height() / 2});
 
 	while (main_window.handle_events() && !main_window.should_close()) {
-		DEBUGF("bat %s; ball %s\n", bat_left.debug_string().c_str(), ball.debug_string().c_str());
-		switch (ball.update_step()) {
-			case object::status::free:
-				break;
-			case object::status::stuck_left:
-				DEBUG("stuck L");
-				ball.reflect_x();
-				break;
-			case object::status::stuck_right:
-				DEBUG("stuck R");
-				ball.reflect_x();
-				break;
-			case object::status::stuck_top:
-			case object::status::stuck_bottom:
-				DEBUG("stuck T/B");
-				ball.reflect_y();
-				break;
-			case object::status::stuck_top_left:
-			case object::status::stuck_bottom_left:
-			case object::status::stuck_top_right:
-			case object::status::stuck_bottom_right:
-				DEBUG("reflect on corner");
-				ball.reflect_x();
-				ball.reflect_y();
-			default:
-				DEBUG("should never happen");
-		}
-
-		bat_left.update_step();
-		bat_right.update_step();
+		engine.update();
 
 		if (main_window.is_pressed(key::escape))
 			break;
 
+		if (main_window.is_pressed(key::wkey))
+			engine.move_left_bat(pong::bat_move::up);
 
-		// it should only accelerate if the bats are not on their boundaries
-		// or alternatively, set acceration to 0 if the bats are on their boundaries
-		if (main_window.is_pressed(key::wkey)) {
-			DEBUG("KBD WKey");
-			bat_left.accelerate({0, -1});
-		}
+		if (main_window.is_pressed(key::skey))
+			engine.move_left_bat(pong::bat_move::down);
 
-		if (main_window.is_pressed(key::skey)) {
-			DEBUG("KBD SKey");
-			bat_left.accelerate({0, 1});
-		}
+		if (main_window.is_pressed(key::up))
+			engine.move_right_bat(pong::bat_move::up);
 
-		if (main_window.is_pressed(key::up)) {
-			DEBUG("KBD Up");
-			bat_right.accelerate({0, -1});
-		}
-
-		if (main_window.is_pressed(key::down)) {
-			DEBUG("KBD Down");
-			bat_right.accelerate({0, 1});
-		}
+		if (main_window.is_pressed(key::down))
+			engine.move_right_bat(pong::bat_move::down);
 
 		clear(main_window, color::black);
-		pong::draw(bat_left, bat_img, main_window);
-		pong::draw(bat_right, bat_img, main_window);
-		pong::draw(ball, ball_img, main_window);
+		pong::draw(engine.left_bat(), bat_img, main_window);
+		pong::draw(engine.right_bat(), bat_img, main_window);
+		pong::draw(engine.ball(), ball_img, main_window);
 
 		main_window.show();
 	};
