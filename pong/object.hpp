@@ -38,6 +38,10 @@ class object {
 	object(sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
 		   sgfx::vec initialAcceleration = {0, 0});
 
+
+	/// sets the object to the desired position
+	void object::set_position(sgfx::point position);
+
 	/// Accelerates the object by increasing its velocity by given @p acceleration.
 	void accelerate(sgfx::vec acceleration);
 

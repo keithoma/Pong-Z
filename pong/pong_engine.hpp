@@ -33,6 +33,8 @@ class engine {
 
 	// Updates the world state.
 	void update();
+
+	void reset_game(sgfx::point center);
 	
 	// Retrieves the goals each player has made so far.
 	std::tuple<unsigned, unsigned> points() const noexcept { return std::make_tuple(goals_left_, goals_right_); }
@@ -43,6 +45,8 @@ class engine {
 	object const& ball() const noexcept { return ball_; }
 
   private:
+  	int sizeX_;
+	int sizeY_;
 	unsigned max_goals_;
 	unsigned goals_left_;
 	unsigned goals_right_;
@@ -52,6 +56,7 @@ class engine {
 
 	bool collision_logic_left();
 	bool collision_logic_right();
+
 };
 
 }  // namespace pong

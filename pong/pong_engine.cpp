@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <random>
 
 #define DEBUG(msg)                       \
 	do {                                 \
@@ -20,7 +21,9 @@ using namespace std;
 namespace pong {
 
 engine::engine(int sizeX, int sizeY, unsigned max_goals)
-	: max_goals_{max_goals},
+	: sizeX_{sizeX},
+	  sizeY_{sizeY},
+	  max_goals_{max_goals},
 	  goals_left_{0},
 	  goals_right_{0},
 	  ball_{
@@ -97,6 +100,48 @@ bool engine::collision_logic_right()
 	}
 }
 
+
+// @@chris: da diese methode nur für den Ball gebraucht wird, sollte man hier
+//          Vererbung benutzen?
+void engine::reset_game(sgfx::point center)
+{
+	ball_.set_position(center);
+
+	random_device random_device;
+	mt19937 random_engine{random_device()};
+	uniform_int_distribution<int> distribution{1, 8};
+
+	switch (distribution(random_engine)) {
+		// easy velocity
+		case 1:
+			ball_.set_velocity({6, 2});
+			break;
+		case 2:
+			ball_.set_velocity({6, -2});
+			break;
+		case 3:
+			ball_.set_velocity({-6, 2});
+			break;
+		case 4:
+			ball_.set_velocity({-6, -2});
+			break;
+
+		// hard velocity
+		case 5:
+			ball_.set_velocity({4, 5});
+			break;
+		case 6:
+			ball_.set_velocity({4, -5});
+			break;
+		case 7:
+			ball_.set_velocity({-4, 5});
+			break;
+		case 8:
+			ball_.set_velocity({-4, -5});
+			break;
+	}
+}
+
 void engine::update()
 {
 	DEBUGF("bat %s; ball %s\n", left_bat_.debug_string().c_str(), ball_.debug_string().c_str());
@@ -113,6 +158,14 @@ void engine::update()
 
 			if (collision_logic_left() == true) {
 				ball_.reflect_x();
+			} else {
+				++goals_right_;
+				if (goals_right_ >= max_goals_) {
+					//@chris
+					//print left player won!
+				} else {
+					reset_game({sizeX_ / 2, sizeY_ / 2});
+				}
 			}
 			
 			break;
@@ -121,6 +174,14 @@ void engine::update()
 
 			if (collision_logic_right() == true) {
 				ball_.reflect_x();
+			} else {
+				++goals_left_;
+				if (goals_left_ >= max_goals_) {
+					//@chris
+					//print left player won!
+				} else {
+					reset_game({sizeX_ / 2, sizeY_ / 2});
+				}
 			}
 
 			break;
