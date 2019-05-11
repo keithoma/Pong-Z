@@ -103,13 +103,13 @@ void line(widget& target, point p0, point p1, color::rgb_color col)
 	}
 	else if (p0.y == p1.y) {
 		// vertical line
-		hline(target, p0, labs(p1.x - p0.x), col);
+		hline(target, p0, abs(p1.x - p0.x), col);
 	}
 	else if (p0.x == p1.x) {
 		// horizontal line
-		vline(target, p0, labs(p1.y - p0.y), col);
+		vline(target, p0, abs(p1.y - p0.y), col);
 	}
-	else if (labs(p1.y - p0.y) < labs(p1.x - p0.x)) {
+	else if (abs(p1.y - p0.y) < abs(p1.x - p0.x)) {
 		// non-trivial line: with the power of Bresenham
 		if (p0.x > p1.x)
 			breseham<0, 1>(p1, p0, bind(plot, ref(target), _1, col));
