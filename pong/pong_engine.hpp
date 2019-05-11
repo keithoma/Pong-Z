@@ -28,8 +28,14 @@ class engine {
 	// Moves the left bat into the given direction.
 	void move_left_bat(bat_move direction);
 
+	// stops the left bat
+	void stop_left_bat();
+
 	// Moves the left bat into the given direction.
 	void move_right_bat(bat_move direction);
+
+	// stops the left bat
+	void stop_right_bat();
 
 	// Updates the world state.
 	void update();

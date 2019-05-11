@@ -48,17 +48,21 @@ int main(int argc, char* argv[])
 		if (main_window.is_pressed(key::escape))
 			break;
 
-		if (main_window.is_pressed(key::wkey))
+		if (main_window.is_pressed(key::wkey)) {
 			engine.move_left_bat(pong::bat_move::up);
-
-		if (main_window.is_pressed(key::skey))
+		} else if (main_window.is_pressed(key::skey)) {
 			engine.move_left_bat(pong::bat_move::down);
+		} else {
+			engine.stop_left_bat();
+		}
 
-		if (main_window.is_pressed(key::up))
+		if (main_window.is_pressed(key::up)) {
 			engine.move_right_bat(pong::bat_move::up);
-
-		if (main_window.is_pressed(key::down))
+		} else if (main_window.is_pressed(key::down)) {
 			engine.move_right_bat(pong::bat_move::down);
+		} else {
+			engine.stop_right_bat();
+		}
 
 		clear(main_window, color::black);
 		pong::draw(engine.left_bat(), bat_img, main_window);

@@ -48,8 +48,14 @@ engine::engine(int sizeX, int sizeY, unsigned max_goals)
 {
 }
 
-// @@BUG: the bats should only move if a key is pressed
 
+
+/**
+ * She accelerates the left bat depending on the given direction.
+ * 
+ * Args:
+ *     direction (bat_move): this should be up or down
+ */
 void engine::move_left_bat(bat_move direction)
 {
 	if (direction == bat_move::up)
@@ -58,6 +64,25 @@ void engine::move_left_bat(bat_move direction)
 		left_bat_.accelerate({0, +1});
 }
 
+
+
+/**
+ * She stops the left bat by setting the velocity of it to {0, 0}.
+ */
+void engine::stop_left_bat()
+{
+	if (left_bat_.velocity() != sgfx::vec {0, 0})
+		left_bat_.set_velocity({0, 0});
+}
+
+
+
+/**
+ * She accelerates the right bat depending on the given direction.
+ * 
+ * Args:
+ *     direction (bat_move): this should be up or down
+ */
 void engine::move_right_bat(bat_move direction)
 {
 	if (direction == bat_move::up)
@@ -65,6 +90,19 @@ void engine::move_right_bat(bat_move direction)
 	else
 		right_bat_.accelerate({0, +1});
 }
+
+
+
+/**
+ * She stops the right bat by setting the velocity of it to {0, 0}.
+ */
+void engine::stop_right_bat()
+{
+	if (right_bat_.velocity() != sgfx::vec {0, 0})
+		right_bat_.set_velocity({0, 0});
+}
+
+
 
 /**
  * She returns a boolean value for the collision logic. Takes the side of the player as parameter.
