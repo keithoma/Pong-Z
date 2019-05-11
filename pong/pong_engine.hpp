@@ -1,10 +1,12 @@
 #pragma once
 
-#include "object.hpp"
 #include <sgfx/primitive_types.hpp>
+#include "object.hpp"
 
+#include <functional>
 #include <random>
 #include <tuple>
+#include <iosfwd>
 
 namespace pong {
 
@@ -19,12 +21,16 @@ enum class player {
 	right,
 };
 
+std::ostream& operator<<(std::ostream& os, player p);
+
 /**
  * Pong Game Engine.
  */
 class engine {
   public:
-	engine(sgfx::dimension size, unsigned max_goals);
+	using player_callback = std::function<void(player)>;
+
+	engine(sgfx::dimension size, unsigned max_goals, player_callback on_goal, player_callback on_game_won);
 
 	// Moves the left bat into the given direction.
 	void move_left_bat(bat_move direction);
@@ -59,11 +65,12 @@ class engine {
 	/// Constructs a random velocity.
 	sgfx::vec random_velocity();
 
-	bool collision_logic(player side);
-
   private:
 	sgfx::dimension size_;
 	unsigned max_goals_;
+	player_callback goal_;
+	player_callback game_won_;
+
 	unsigned goals_left_;
 	unsigned goals_right_;
 	std::mt19937 rng_;

@@ -10,20 +10,9 @@ using namespace sgfx;
 
 namespace pong {
 
-object::object(dimension size, rectangle bounds, vec maxVelocities, point initialPosition,
-			   vec initialAcceleration)
-	: size_{size},
-	  bounds_{bounds},
-	  maxVelocities_{maxVelocities},
-	  position_{initialPosition},
-	  velocity_{initialAcceleration},
-	  status_{status::free}
-{
-}
-
 void object::set_position(point position)
 {
-	position_ = {position};
+	position_ = position;
 }
 
 void object::accelerate(vec acceleration)

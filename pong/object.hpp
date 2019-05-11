@@ -35,9 +35,16 @@ class object {
 	 * @p maxVelocities maximum velocity per coordinate this object may gain
 	 * @p initialPosition the objects initial position
 	 */
-	object(sgfx::dimension size,
-		   sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
-		   sgfx::vec initialAcceleration = {0, 0});
+	constexpr object(sgfx::dimension size, sgfx::rectangle bounds, sgfx::vec maxVelocities,
+					 sgfx::point initialPosition, sgfx::vec initialAcceleration = {0, 0})
+		: size_{size},
+		  bounds_{bounds},
+		  maxVelocities_{maxVelocities},
+		  position_{initialPosition},
+		  velocity_{initialAcceleration},
+		  status_{status::free}
+	{
+	}
 
 	/// sets the object to the desired position
 	void set_position(sgfx::point position);
@@ -68,6 +75,9 @@ class object {
 		return std::string(buf, n);
 	}
 
+	/// Retrieves the geometry (bounding box) of this object in space.
+	sgfx::rectangle bounding_box() const noexcept { return sgfx::rectangle{position_, size_}; }
+
   private:
 	const sgfx::dimension size_;
 	const sgfx::rectangle bounds_;
@@ -76,6 +86,11 @@ class object {
 	sgfx::vec velocity_;
 	status status_;
 };
+
+constexpr bool is_colliding(object const& a, object const& b) noexcept
+{
+	return intersects(a.bounding_box(), b.bounding_box());
+}
 
 void draw(object const& object, sgfx::canvas const& image, sgfx::widget& target);
 

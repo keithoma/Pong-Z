@@ -22,21 +22,31 @@ using namespace sgfx;
 
 namespace pong {
 
-engine::engine(dimension size, unsigned max_goals)
+std::ostream& operator<<(std::ostream& os, player p)
+{
+	if (p == player::left)
+		os << "left";
+	else
+		os << "right";
+	return os;
+}
+engine::engine(dimension size, unsigned max_goals, player_callback goal, player_callback game_won)
 	: size_{size},
 	  max_goals_{max_goals},
+	  goal_{move(goal)},
+	  game_won_{move(game_won)},
 	  goals_left_{0},
 	  goals_right_{0},
 	  rng_{},
 	  ball_{
-		  {20, 20},                                          // dimension
-		  {{10, 10},                                         // boundaries
+		  {20, 20},   // dimension
+		  {{10, 10},  // boundaries
 		   {static_cast<std::uint16_t>(size.width - 40),
 			static_cast<std::uint16_t>(size.height - 20)}},  // boundaries
 															 // -40 to make it more fluid
 		  {6, 6},                                            // max velocity
 		  {size.width / 2, size.height / 2},                 // initial pos
-		  random_velocity()                                  // initial accel
+		  {6, 0}  // random_velocity()                           // initial accel
 	  },
 	  left_bat_{
 		  {20, 100},                         // dimension
@@ -108,44 +118,6 @@ vec engine::random_velocity()
 	return velocities[uniform_int_distribution{0, 7}(rng_)];
 }
 
-/**
- * She returns a boolean value for the collision logic. Takes the side of the player as parameter.
- *
- * Args:
- *     side (player): left or right, determines the constants for the bat
- *
- * Returns:
- *     (boolean): true if the ball and the bat collide, false if else
- */
-bool engine::collision_logic(player side)
-{
-	int bat_top;
-	int bat_bot;
-
-	// left player; +/-5 so that it feels more fair
-	if (side == player::left) {
-		bat_top = left_bat_.position().y - 5;
-		bat_bot = left_bat_.position().y + 105;
-
-		// right player; +/-5 so that it feels more fair
-	}
-	else {
-		bat_top = right_bat_.position().y - 5;
-		bat_bot = right_bat_.position().y + 105;
-	}
-
-	// constants for the ball
-	const int ball_top = ball_.position().y;
-	const int ball_bot = ball_.position().y + 20;
-
-	if (bat_top > ball_top && bat_bot > ball_top || bat_bot < ball_bot && bat_top < ball_bot) {
-		return false;
-	}
-	else {
-		return true;
-	}
-}
-
 void engine::reset()
 {
 	ball_.set_position(size_ / 2);
@@ -154,8 +126,6 @@ void engine::reset()
 
 void engine::update()
 {
-	DEBUGF("bat %s; ball %s\n", left_bat_.debug_string().c_str(), ball_.debug_string().c_str());
-
 	// TODO: make sure we don't let things move too fast because of faster CPU (by providing own timer)
 	left_bat_.update_step();
 	right_bat_.update_step();
@@ -166,14 +136,12 @@ void engine::update()
 		case object::status::stuck_left:
 			DEBUG("stuck L");
 
-			if (collision_logic(player::left) == true) {
+			if (is_colliding(ball_, left_bat_))
 				ball_.reflect_x();
-			}
 			else {
 				++goals_right_;
 				if (goals_right_ >= max_goals_) {
-					//@chris
-					// print left player won!
+					game_won_(player::left);
 				}
 				else {
 					reset();
@@ -184,9 +152,8 @@ void engine::update()
 		case object::status::stuck_right:
 			DEBUG("stuck R");
 
-			if (collision_logic(player::right) == true) {
+			if (is_colliding(ball_, right_bat_))
 				ball_.reflect_x();
-			}
 			else {
 				++goals_left_;
 				if (goals_left_ >= max_goals_) {

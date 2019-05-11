@@ -8,6 +8,7 @@
 #include <sgfx/canvas.hpp>
 #include <sgfx/window.hpp>
 
+#include <iostream>
 #include <cassert>
 #include <cstdio>
 
@@ -37,8 +38,12 @@ int main(int argc, char* argv[])
 	// create visual for bat:
 	auto const bat_img = canvas::colored({20, 100}, color::blue);
 
+	// some game feedback implementations
+	auto on_goal = [](player player) { cout << "Player " << player << " has scored a point." << endl; };
+	auto on_game_won = [](player player) { cout << "Player " << player << " has won this match!" << endl; };
+
 	// initialize the engine; parameters are: window width, window height, goals to win
-	auto engine = pong::engine{dimension{1024, 768}, 8};
+	auto engine = pong::engine{dimension{1024, 768}, 8, on_goal, on_game_won};
 
 	while (main_window.handle_events() && !main_window.should_close()) {
 		engine.update();
