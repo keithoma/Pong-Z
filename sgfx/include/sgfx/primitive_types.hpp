@@ -1,16 +1,24 @@
 #pragma once
 
 #include <cstddef>
-
 namespace sgfx {
 
+/**
+ * Represents a 2-dimensional point in space.
+ */
 struct point {
 	int x;
 	int y;
 
-	bool operator==(const point& p) const noexcept { return x == p.x && y == p.y; }
-	bool operator!=(const point& p) const noexcept { return !(*this == p); }
+	constexpr bool operator==(const point& p) const noexcept { return x == p.x && y == p.y; }
+	constexpr bool operator!=(const point& p) const noexcept { return !(*this == p); }
 
+	/**
+	 * Constructs a point by explicitly indexing the coordinates that are going to be assigned.
+	 *
+	 * For (A, B) == (0, 1) the point is constructed as {a, b}
+	 * For (A, B) == (1, 0) the point is constructed as {b, a}
+	 */
 	template <const std::size_t A, const std::size_t B>
 	static constexpr point indexed(int a, int b)
 	{
@@ -61,13 +69,37 @@ struct dimension {
 	int width;
 	int height;
 
-	bool operator==(const dimension& d) const noexcept { return width == d.width && height == d.height; }
-	bool operator!=(const dimension& d) const noexcept { return !(*this == d); }
+	constexpr bool operator==(const dimension& d) const noexcept { return width == d.width && height == d.height; }
+	constexpr bool operator!=(const dimension& d) const noexcept { return !(*this == d); }
 };
 
 struct rectangle {
 	point top_left;
 	dimension size;
+
+	constexpr int top() const noexcept { return top_left.y; }
+	constexpr int bottom() const noexcept { return top_left.y + size.height; }
+	constexpr int left() const noexcept { return top_left.x; }
+	constexpr int right() const noexcept { return top_left.x + size.width; }
 };
+
+/**
+  * Tests whether or not rectangle a is intersecting with rectangle b.
+  *
+  * @retval true they are intersecting with each other.
+  * @retval false they're not intersecting with each other.
+  */
+constexpr bool intersects(rectangle const& a, rectangle const& b)
+{
+	// vertical check
+	if (a.bottom() > b.top() || b.bottom() > a.top())
+		return false;
+
+	// horizontal check
+	if (a.right() < b.left() || b.right() < a.left())
+		return false;
+
+	return true;
+}
 
 }  // namespace sgfx
