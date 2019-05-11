@@ -3,6 +3,7 @@
 #include <sgfx/primitive_types.hpp>
 #include "object.hpp"
 
+#include <chrono>
 #include <functional>
 #include <random>
 #include <tuple>
@@ -45,7 +46,7 @@ class engine {
 	void stop_right_bat();
 
 	/// Updates the world state.
-	void update();
+	void update(std::chrono::time_point<std::chrono::steady_clock> now);
 
 	/// Resets the game by resetting the ball.
 	void reset();

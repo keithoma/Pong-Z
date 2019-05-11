@@ -3,6 +3,7 @@
 
 #include <sgfx/primitive_types.hpp>
 
+#include <chrono>
 #include <optional>
 #include <string>
 
@@ -36,13 +37,16 @@ class object {
 	 * @p initialPosition the objects initial position
 	 */
 	constexpr object(sgfx::dimension size, sgfx::rectangle bounds, sgfx::vec maxVelocities,
-					 sgfx::point initialPosition, sgfx::vec initialAcceleration = {0, 0})
+					 sgfx::point initialPosition, sgfx::vec initialAcceleration,
+					 std::chrono::time_point<std::chrono::steady_clock> now)
 		: size_{size},
 		  bounds_{bounds},
 		  maxVelocities_{maxVelocities},
 		  position_{initialPosition},
 		  velocity_{initialAcceleration},
-		  status_{status::free}
+		  acceleration_{0, 0},
+		  status_{status::free},
+		  last_update_{now}
 	{
 	}
 
@@ -62,7 +66,7 @@ class object {
 	void reflect_y();
 
 	/// Updates its current position with regard to acceleration & bounds
-	status update_step();
+	status update(std::chrono::time_point<std::chrono::steady_clock> now);
 
 	/// Retrieves the object dimensions
 	sgfx::dimension const& size() const noexcept { return size_; }
@@ -90,7 +94,9 @@ class object {
 	const sgfx::vec maxVelocities_;
 	sgfx::point position_;
 	sgfx::vec velocity_;
+	sgfx::vec acceleration_;
 	status status_;
+	std::chrono::time_point<std::chrono::steady_clock> last_update_;
 };
 
 constexpr bool is_colliding(object const& a, object const& b) noexcept

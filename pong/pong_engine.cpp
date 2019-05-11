@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <random>
 
 #define DEBUG(msg)                       \
@@ -18,6 +19,7 @@
 	} while (0)
 
 using namespace std;
+using namespace std::chrono;
 using namespace sgfx;
 
 namespace pong {
@@ -46,7 +48,8 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 															 // -40 to make it more fluid
 		  {6, 6},                                            // max velocity
 		  {size.width / 2, size.height / 2},                 // initial pos
-		  random_velocity()                                  // initial accel
+		  random_velocity(),                                 // initial accel
+		  steady_clock::now(),
 	  },
 	  left_bat_{
 		  {20, 100},                         // dimension
@@ -54,6 +57,8 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 		  {0, 6},                            // max velocities
 		  {0, size.height / 2 - 50},         // initial position;
 											 // -50 because the bat height is 100
+		  {0, 0},
+		  steady_clock::now(),
 	  },
 	  right_bat_{
 		  {20, 100},                                                     // dimension
@@ -61,6 +66,8 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 		  {0, 6},                                                        // max velocities
 		  {size.width - 20, size.height / 2 - 50},                       // initial position;
 													// ^ -50 because the bat height is 100
+		  {0, 0},
+		  steady_clock::now(),
 	  }
 {
 }
@@ -124,13 +131,16 @@ void engine::reset()
 	ball_.set_velocity(random_velocity());
 }
 
-void engine::update()
+void engine::update(time_point<steady_clock> now)
 {
 	// TODO: make sure we don't let things move too fast because of faster CPU (by providing own timer)
-	left_bat_.update_step();
-	right_bat_.update_step();
+	// Per second, 100 speed ticks equal 100 pixels in the Matrix.
+	left_bat_.update(now);
+	right_bat_.update(now);
 
-	switch (ball_.update_step()) {
+	// TODO: slow down bats (down to 0) as they're not getting accelerated by user input
+
+	switch (ball_.update(now)) {
 		case object::status::free:
 			if (is_colliding(ball_, left_bat_))
 				ball_.reflect_x();

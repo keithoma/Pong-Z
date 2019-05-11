@@ -3,10 +3,16 @@
 #include <sgfx/primitives.hpp>
 
 #include <algorithm>
+#include <chrono>
 #include <climits>
+#include <iostream>
 
 using namespace std;
+using namespace std::chrono;
 using namespace sgfx;
+
+// TODO: new impl (velocity gets updated in update() based on time difference to last update() call)
+#define OLD_VELOCITY_IMPL
 
 namespace pong {
 
@@ -17,11 +23,14 @@ void object::set_position(point position)
 
 void object::accelerate(vec acceleration)
 {
+#if defined(OLD_VELOCITY_IMPL)
 	set_velocity(velocity_ + acceleration);
+#else
+	acceleration_ = acceleration;
+#endif
 }
 
-// @@chris: kann man bestimmt schöner machen
-// 		    vielleicht mit abs()
+// TODO (chris) schoener machen (abs?)
 void object::set_velocity(vec velocity)
 {
 	int velox;
@@ -54,7 +63,7 @@ void object::reflect_y()
 	set_velocity({velocity_.x, -velocity_.y});
 }
 
-object::status object::update_step()
+object::status object::update(time_point<steady_clock> now)
 {
 	static auto const clamp = [](int low, int val, int high) {
 		if (val < low)
@@ -64,6 +73,21 @@ object::status object::update_step()
 		else
 			return val;
 	};
+
+#if !defined(OLD_VELOCITY_IMPL)
+	// 100 pixels = 1 second * 1 velocity
+	auto const time_gap = duration<double>{now - last_update_};
+	auto const adj = static_cast<int>(10.0 * time_gap.count());
+
+	velocity_ = (velocity_ + acceleration_) * adj;
+	acceleration_ = {0, 0};
+
+	// debug print
+	cout << "adj: " << adj
+		 << " a: " << to_string(acceleration_)
+		 << " v: " << to_string(velocity_)
+		 << "\n";
+#endif
 
 	position_.x =
 		clamp(bounds_.top_left.x, position_.x + velocity_.x, bounds_.top_left.x + bounds_.size.width);
@@ -105,6 +129,7 @@ object::status object::update_step()
 	else {
 		status_ = status::free;
 	}
+	last_update_ = now;
 	return status_;
 }
 

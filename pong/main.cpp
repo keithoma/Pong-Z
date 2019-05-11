@@ -8,6 +8,7 @@
 #include <sgfx/canvas.hpp>
 #include <sgfx/window.hpp>
 
+#include <chrono>
 #include <iostream>
 #include <cassert>
 #include <cstdio>
@@ -28,6 +29,7 @@ using namespace std;
 		fprintf(stderr, "\n");             \
 	} while (0)
 
+using namespace std::chrono;
 int main(int argc, char* argv[])
 {
 	auto main_window = window{1024, 768};
@@ -46,7 +48,7 @@ int main(int argc, char* argv[])
 	auto const bat_img = canvas::colored(game.left_bat().size(), color::blue);
 
 	while (main_window.handle_events() && !main_window.should_close()) {
-		game.update();
+		game.update(chrono::steady_clock::now());
 
 		if (game.over() || main_window.is_pressed(key::escape))
 			break;
@@ -62,7 +64,7 @@ int main(int argc, char* argv[])
 		          (!main_window.is_pressed(key::wkey))) {
 			game.move_left_bat(pong::bat_move::down);
 		} else {
-			game.stop_left_bat();
+			game.stop_left_bat(); // TODO: remove once not needed anymore
 		}
 
 		// right bat:
@@ -73,7 +75,7 @@ int main(int argc, char* argv[])
 		          (!main_window.is_pressed(key::up))) {
 			game.move_right_bat(pong::bat_move::down);
 		} else {
-			game.stop_right_bat();
+			game.stop_right_bat(); // TODO: remove once not needed anymore
 		}
 
 		clear(main_window, color::black);
