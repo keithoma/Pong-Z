@@ -1,6 +1,9 @@
 #pragma once
 
 #include <cstddef>
+#include <string>
+#include <cstdio>
+
 namespace sgfx {
 
 /**
@@ -32,6 +35,11 @@ struct point {
 	}
 };
 
+constexpr point operator*(point const& a, int s)
+{
+	return point{a.x * s, a.y * s};
+}
+
 constexpr point operator+(point const& a, point const& b)
 {
 	return point{a.x + b.x, a.y + b.y};
@@ -60,6 +68,12 @@ constexpr int& get(point& p)
 		return p.x;
 	else
 		return p.y;
+}
+
+inline std::string to_string(point const& p)
+{
+	char buf[80];
+	return std::string(buf, snprintf(buf, sizeof(buf), "{%d, %d}", p.x, p.y));
 }
 
 // vec is a 2 dimensional field, so is point.
