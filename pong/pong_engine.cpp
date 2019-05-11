@@ -66,15 +66,34 @@ void engine::move_right_bat(bat_move direction)
 		right_bat_.accelerate({0, +1});
 }
 
-
-// @@chris kann man bestimmt mit einem pointer in eine funktion zusammenfassen
-
-bool engine::collision_logic_left()
+/**
+ * She returns a boolean value for the collision logic. Takes the side of the player as parameter.
+ * 
+ * Args:
+ *     side (player): left or right, determines the constants for the bat
+ * 
+ * Returns:
+ *     (boolean): true if the ball and the bat collide, false if else
+ */
+bool engine::collision_logic(player side)
 {
-	const int bat_top = left_bat_.position().y;
-	const int bat_bot = left_bat_.position().y + 100;
-	const int ball_top = ball_.position().y;
-	const int ball_bot = ball_.position().y + 20;
+	unsigned bat_top;
+	unsigned bat_bot;
+
+	// left player
+	if (side == player::left) {
+		bat_top = left_bat_.position().y;
+		bat_bot = left_bat_.position().y + 100;
+
+	// right player
+	} else {
+		bat_top = right_bat_.position().y;
+		bat_bot = right_bat_.position().y + 100;
+	}
+
+	// constants for the ball
+	const unsigned ball_top = ball_.position().y;
+	const unsigned ball_bot = ball_.position().y + 20;
 
 	if (bat_top > ball_top && bat_bot > ball_top ||
 	    bat_bot < ball_bot && bat_top < ball_bot) {
@@ -83,22 +102,6 @@ bool engine::collision_logic_left()
 		return true;
 	}
 }
-
-bool engine::collision_logic_right()
-{
-	const int bat_top = right_bat_.position().y;
-	const int bat_bot = right_bat_.position().y + 100;
-	const int ball_top = ball_.position().y;
-	const int ball_bot = ball_.position().y + 20;
-
-	if (bat_top > ball_top && bat_bot > ball_top ||
-	    bat_bot < ball_bot && bat_top < ball_bot) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
 
 // @@chris: da diese methode nur für den Ball gebraucht wird, sollte man hier
 //          Vererbung benutzen?
@@ -155,7 +158,7 @@ void engine::update()
 		case object::status::stuck_left:
 			DEBUG("stuck L");
 
-			if (collision_logic_left() == true) {
+			if (collision_logic(player::left) == true) {
 				ball_.reflect_x();
 			} else {
 				++goals_right_;
@@ -171,7 +174,7 @@ void engine::update()
 		case object::status::stuck_right:
 			DEBUG("stuck R");
 
-			if (collision_logic_right() == true) {
+			if (collision_logic(player::right) == true) {
 				ball_.reflect_x();
 			} else {
 				++goals_left_;

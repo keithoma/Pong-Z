@@ -54,8 +54,7 @@ class engine {
 	object left_bat_;
 	object right_bat_;
 
-	bool collision_logic_left();
-	bool collision_logic_right();
+	bool collision_logic(player side);
 
 };
 
