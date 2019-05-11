@@ -48,17 +48,26 @@ int main(int argc, char* argv[])
 		if (main_window.is_pressed(key::escape))
 			break;
 
-		if (main_window.is_pressed(key::wkey)) {
+		// looks cryptic, but essentially moves the bat according to the keys that are pressed
+		// if no keys are pressed, the bat stops
+		//
+		// left bat:
+		if (main_window.is_pressed(key::wkey) &&
+		   (!main_window.is_pressed(key::skey))) {
 			engine.move_left_bat(pong::bat_move::up);
-		} else if (main_window.is_pressed(key::skey)) {
+		} else if (main_window.is_pressed(key::skey) &&
+		          (!main_window.is_pressed(key::wkey))) {
 			engine.move_left_bat(pong::bat_move::down);
 		} else {
 			engine.stop_left_bat();
 		}
 
-		if (main_window.is_pressed(key::up)) {
+		// right bat:
+		if (main_window.is_pressed(key::up) &&
+		   (!main_window.is_pressed(key::down))) {
 			engine.move_right_bat(pong::bat_move::up);
-		} else if (main_window.is_pressed(key::down)) {
+		} else if (main_window.is_pressed(key::down) &&
+		          (!main_window.is_pressed(key::up))) {
 			engine.move_right_bat(pong::bat_move::down);
 		} else {
 			engine.stop_right_bat();

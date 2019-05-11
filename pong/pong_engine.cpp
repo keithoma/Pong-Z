@@ -28,7 +28,8 @@ engine::engine(int sizeX, int sizeY, unsigned max_goals)
 	  goals_right_{0},
 	  ball_{
 		  {{10, 10},
-		   {static_cast<std::uint16_t>(sizeX - 20), static_cast<std::uint16_t>(sizeY - 20)}},  // boundaries
+		   {static_cast<std::uint16_t>(sizeX - 40), static_cast<std::uint16_t>(sizeY - 20)}},  // boundaries
+		                                                                                       // -40 to make it more fluid
 		  {6, 6},                                                                              // max velocity
 		  {sizeX / 2, sizeY / 2},                                                              // initial pos
 		  {-6, 0}  // initial accel
@@ -48,8 +49,6 @@ engine::engine(int sizeX, int sizeY, unsigned max_goals)
 {
 }
 
-
-
 /**
  * She accelerates the left bat depending on the given direction.
  * 
@@ -64,8 +63,6 @@ void engine::move_left_bat(bat_move direction)
 		left_bat_.accelerate({0, +1});
 }
 
-
-
 /**
  * She stops the left bat by setting the velocity of it to {0, 0}.
  */
@@ -74,8 +71,6 @@ void engine::stop_left_bat()
 	if (left_bat_.velocity() != sgfx::vec {0, 0})
 		left_bat_.set_velocity({0, 0});
 }
-
-
 
 /**
  * She accelerates the right bat depending on the given direction.
@@ -91,8 +86,6 @@ void engine::move_right_bat(bat_move direction)
 		right_bat_.accelerate({0, +1});
 }
 
-
-
 /**
  * She stops the right bat by setting the velocity of it to {0, 0}.
  */
@@ -101,8 +94,6 @@ void engine::stop_right_bat()
 	if (right_bat_.velocity() != sgfx::vec {0, 0})
 		right_bat_.set_velocity({0, 0});
 }
-
-
 
 /**
  * She returns a boolean value for the collision logic. Takes the side of the player as parameter.
@@ -115,23 +106,23 @@ void engine::stop_right_bat()
  */
 bool engine::collision_logic(player side)
 {
-	unsigned bat_top;
-	unsigned bat_bot;
+	int bat_top;
+	int bat_bot;
 
-	// left player
+	// left player; +/-5 so that it feels more fair
 	if (side == player::left) {
-		bat_top = left_bat_.position().y;
-		bat_bot = left_bat_.position().y + 100;
+		bat_top = left_bat_.position().y - 5;
+		bat_bot = left_bat_.position().y + 105;
 
-	// right player
+	// right player; +/-5 so that it feels more fair
 	} else {
-		bat_top = right_bat_.position().y;
-		bat_bot = right_bat_.position().y + 100;
+		bat_top = right_bat_.position().y - 5;
+		bat_bot = right_bat_.position().y + 105;
 	}
 
 	// constants for the ball
-	const unsigned ball_top = ball_.position().y;
-	const unsigned ball_bot = ball_.position().y + 20;
+	const int ball_top = ball_.position().y;
+	const int ball_bot = ball_.position().y + 20;
 
 	if (bat_top > ball_top && bat_bot > ball_top ||
 	    bat_bot < ball_bot && bat_top < ball_bot) {
