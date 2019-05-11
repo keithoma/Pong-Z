@@ -102,15 +102,7 @@ struct rectangle {
  */
 constexpr bool intersects(rectangle const& a, rectangle const& b)
 {
-	// vertical check
-	if (a.bottom() > b.top() || b.bottom() > a.top())
-		return false;
-
-	// horizontal check
-	if (a.right() < b.left() || b.right() < a.left())
-		return false;
-
-	return true;
+	return a.left() < b.right() && b.left() < a.right() && a.top() < b.bottom() && b.top() < a.bottom();
 }
 
 }  // namespace sgfx
