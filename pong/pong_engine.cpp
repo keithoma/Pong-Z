@@ -46,7 +46,7 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 															 // -40 to make it more fluid
 		  {6, 6},                                            // max velocity
 		  {size.width / 2, size.height / 2},                 // initial pos
-		  {6, 0}  // random_velocity()                           // initial accel
+		  random_velocity()                                  // initial accel
 	  },
 	  left_bat_{
 		  {20, 100},                         // dimension
@@ -132,47 +132,43 @@ void engine::update()
 
 	switch (ball_.update_step()) {
 		case object::status::free:
+			if (is_colliding(ball_, left_bat_))
+				ball_.reflect_x();
+			if (is_colliding(ball_, right_bat_))
+				ball_.reflect_x();
 			break;
 		case object::status::stuck_left:
-			DEBUG("stuck L");
-
 			if (is_colliding(ball_, left_bat_))
 				ball_.reflect_x();
 			else {
 				++goals_right_;
-				if (goals_right_ >= max_goals_) {
-					game_won_(player::left);
-				}
+				if (goals_right_ >= max_goals_)
+					game_won_(player::right);
 				else {
+					goal_(player::right);
 					reset();
 				}
 			}
-
 			break;
 		case object::status::stuck_right:
-			DEBUG("stuck R");
-
 			if (is_colliding(ball_, right_bat_))
 				ball_.reflect_x();
 			else {
 				++goals_left_;
-				if (goals_left_ >= max_goals_) {
-					//@chris
-					// print left player won!
-				}
+				if (goals_left_ >= max_goals_)
+					game_won_(player::left);
 				else {
+					goal_(player::left);
 					reset();
 				}
 			}
-
 			break;
 		case object::status::stuck_top:
 		case object::status::stuck_bottom:
-			DEBUG("stuck T/B");
 			ball_.reflect_y();
 			break;
 
-		//@BUG: collision logic need to be implemented here
+		//@TODO: collision logic need to be implemented here
 		case object::status::stuck_top_left:
 		case object::status::stuck_bottom_left:
 		case object::status::stuck_top_right:

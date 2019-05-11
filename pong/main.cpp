@@ -32,23 +32,23 @@ int main(int argc, char* argv[])
 {
 	auto main_window = window{1024, 768};
 
-	// create visual for ball:
-	auto const ball_img = canvas::colored({20, 20}, color::red);
-
-	// create visual for bat:
-	auto const bat_img = canvas::colored({20, 100}, color::blue);
-
 	// some game feedback implementations
 	auto on_goal = [](player player) { cout << "Player " << player << " has scored a point." << endl; };
 	auto on_game_won = [](player player) { cout << "Player " << player << " has won this match!" << endl; };
 
 	// initialize the engine; parameters are: window width, window height, goals to win
-	auto engine = pong::engine{dimension{1024, 768}, 8, on_goal, on_game_won};
+	auto game = pong::engine{dimension{1024, 768}, 8, on_goal, on_game_won};
+
+	// create visual for ball
+	auto const ball_img = canvas::colored(game.ball().size(), color::red);
+
+	// create visual for bat (both bats have same size)
+	auto const bat_img = canvas::colored(game.left_bat().size(), color::blue);
 
 	while (main_window.handle_events() && !main_window.should_close()) {
-		engine.update();
+		game.update();
 
-		if (main_window.is_pressed(key::escape))
+		if (game.over() || main_window.is_pressed(key::escape))
 			break;
 
 		// looks cryptic, but essentially moves the bat according to the keys that are pressed
@@ -57,29 +57,29 @@ int main(int argc, char* argv[])
 		// left bat:
 		if (main_window.is_pressed(key::wkey) &&
 		   (!main_window.is_pressed(key::skey))) {
-			engine.move_left_bat(pong::bat_move::up);
+			game.move_left_bat(pong::bat_move::up);
 		} else if (main_window.is_pressed(key::skey) &&
 		          (!main_window.is_pressed(key::wkey))) {
-			engine.move_left_bat(pong::bat_move::down);
+			game.move_left_bat(pong::bat_move::down);
 		} else {
-			engine.stop_left_bat();
+			game.stop_left_bat();
 		}
 
 		// right bat:
 		if (main_window.is_pressed(key::up) &&
 		   (!main_window.is_pressed(key::down))) {
-			engine.move_right_bat(pong::bat_move::up);
+			game.move_right_bat(pong::bat_move::up);
 		} else if (main_window.is_pressed(key::down) &&
 		          (!main_window.is_pressed(key::up))) {
-			engine.move_right_bat(pong::bat_move::down);
+			game.move_right_bat(pong::bat_move::down);
 		} else {
-			engine.stop_right_bat();
+			game.stop_right_bat();
 		}
 
 		clear(main_window, color::black);
-		pong::draw(engine.left_bat(), bat_img, main_window);
-		pong::draw(engine.right_bat(), bat_img, main_window);
-		pong::draw(engine.ball(), ball_img, main_window);
+		pong::draw(game.left_bat(), bat_img, main_window);
+		pong::draw(game.right_bat(), bat_img, main_window);
+		pong::draw(game.ball(), ball_img, main_window);
 
 		main_window.show();
 	};

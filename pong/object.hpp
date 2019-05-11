@@ -64,8 +64,17 @@ class object {
 	/// Updates its current position with regard to acceleration & bounds
 	status update_step();
 
+	/// Retrieves the object dimensions
+	sgfx::dimension const& size() const noexcept { return size_; }
+
+	/// Retrieves the current object position (top-left)
 	sgfx::point const& position() const noexcept { return position_; }
+
+	/// Retrieves the current object velocity (speed).
 	sgfx::vec const& velocity() const noexcept { return velocity_; }
+
+	/// Retrieves the geometry (bounding box) of this object in space.
+	sgfx::rectangle bounding_box() const noexcept { return sgfx::rectangle{position_, size_}; }
 
 	std::string debug_string() const
 	{
@@ -74,9 +83,6 @@ class object {
 						  velocity_.x, velocity_.y);
 		return std::string(buf, n);
 	}
-
-	/// Retrieves the geometry (bounding box) of this object in space.
-	sgfx::rectangle bounding_box() const noexcept { return sgfx::rectangle{position_, size_}; }
 
   private:
 	const sgfx::dimension size_;

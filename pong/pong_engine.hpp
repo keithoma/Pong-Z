@@ -32,29 +32,32 @@ class engine {
 
 	engine(sgfx::dimension size, unsigned max_goals, player_callback on_goal, player_callback on_game_won);
 
-	// Moves the left bat into the given direction.
+	/// Moves the left bat into the given direction.
 	void move_left_bat(bat_move direction);
 
-	// stops the left bat
+	/// stops the left bat
 	void stop_left_bat();
 
-	// Moves the left bat into the given direction.
+	/// Moves the left bat into the given direction.
 	void move_right_bat(bat_move direction);
 
-	// stops the left bat
+	/// stops the left bat
 	void stop_right_bat();
 
-	// Updates the world state.
+	/// Updates the world state.
 	void update();
 
-	// Resets the game by resetting the ball.
+	/// Resets the game by resetting the ball.
 	void reset();
 
-	// Retrieves the goals each player has made so far.
+	/// Retrieves the goals each player has made so far.
 	std::tuple<unsigned, unsigned> points() const noexcept
 	{
 		return std::make_tuple(goals_left_, goals_right_);
 	}
+
+	/// Tests whether or not game is over.
+	bool over() const noexcept { return goals_left_ >= max_goals_ || goals_right_ >= max_goals_; }
 
 	// Object accessors (use them for drawing those objects with a canvas to a window).
 	object const& left_bat() const noexcept { return left_bat_; }
