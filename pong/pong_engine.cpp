@@ -1,7 +1,8 @@
 #include "pong_engine.hpp"
+#include <sgfx/primitive_types.hpp>
 
-#include <vector>
 #include <algorithm>
+#include <array>
 #include <random>
 
 #define DEBUG(msg)                       \
@@ -17,41 +18,46 @@
 	} while (0)
 
 using namespace std;
+using namespace sgfx;
 
 namespace pong {
 
-engine::engine(int sizeX, int sizeY, unsigned max_goals)
-	: sizeX_{sizeX},
-	  sizeY_{sizeY},
+engine::engine(dimension size, unsigned max_goals)
+	: size_{size},
 	  max_goals_{max_goals},
 	  goals_left_{0},
 	  goals_right_{0},
+	  rng_{},
 	  ball_{
-		  {{10, 10},
-		   {static_cast<std::uint16_t>(sizeX - 40), static_cast<std::uint16_t>(sizeY - 20)}},  // boundaries
-		                                                                                       // -40 to make it more fluid
-		  {6, 6},                                                                              // max velocity
-		  {sizeX / 2, sizeY / 2},                                                              // initial pos
-		  {-6, 0}  // initial accel
+		  {20, 20},                                          // dimension
+		  {{10, 10},                                         // boundaries
+		   {static_cast<std::uint16_t>(size.width - 40),
+			static_cast<std::uint16_t>(size.height - 20)}},  // boundaries
+															 // -40 to make it more fluid
+		  {6, 6},                                            // max velocity
+		  {size.width / 2, size.height / 2},                 // initial pos
+		  random_velocity()                                  // initial accel
 	  },
 	  left_bat_{
-		  {{0, 0}, {0, sizeY - 100}},  // boundaries
-		  {0, 6},                      // max velocities
-		  {0, sizeY / 2 - 50},         // initial position;
-									   // -50 because the bat height is 100
+		  {20, 100},                         // dimension
+		  {{0, 0}, {0, size.height - 100}},  // boundaries
+		  {0, 6},                            // max velocities
+		  {0, size.height / 2 - 50},         // initial position;
+											 // -50 because the bat height is 100
 	  },
 	  right_bat_{
-		  {{sizeX - 20, 0}, {sizeX - 20, sizeY - 100}},  // boundaries
-		  {0, 6},                                        // max velocities
-		  {sizeX - 20, sizeY / 2 - 50},                  // initial position;
-														 // ^ -50 because the bat height is 100
+		  {20, 100},                                                     // dimension
+		  {{size.width - 20, 0}, {size.width - 20, size.height - 100}},  // boundaries
+		  {0, 6},                                                        // max velocities
+		  {size.width - 20, size.height / 2 - 50},                       // initial position;
+													// ^ -50 because the bat height is 100
 	  }
 {
 }
 
 /**
  * She accelerates the left bat depending on the given direction.
- * 
+ *
  * Args:
  *     direction (bat_move): this should be up or down
  */
@@ -68,13 +74,13 @@ void engine::move_left_bat(bat_move direction)
  */
 void engine::stop_left_bat()
 {
-	if (left_bat_.velocity() != sgfx::vec {0, 0})
+	if (left_bat_.velocity() != vec{0, 0})
 		left_bat_.set_velocity({0, 0});
 }
 
 /**
  * She accelerates the right bat depending on the given direction.
- * 
+ *
  * Args:
  *     direction (bat_move): this should be up or down
  */
@@ -91,16 +97,23 @@ void engine::move_right_bat(bat_move direction)
  */
 void engine::stop_right_bat()
 {
-	if (right_bat_.velocity() != sgfx::vec {0, 0})
+	if (right_bat_.velocity() != vec{0, 0})
 		right_bat_.set_velocity({0, 0});
+}
+
+vec engine::random_velocity()
+{
+	static constexpr array<point, 8> velocities{vec{6, 2}, vec{6, -2}, vec{-6, 2}, vec{-6, -2},
+												vec{4, 5}, vec{4, -5}, vec{-4, 5}, vec{-4, -5}};
+	return velocities[uniform_int_distribution{0, 7}(rng_)];
 }
 
 /**
  * She returns a boolean value for the collision logic. Takes the side of the player as parameter.
- * 
+ *
  * Args:
  *     side (player): left or right, determines the constants for the bat
- * 
+ *
  * Returns:
  *     (boolean): true if the ball and the bat collide, false if else
  */
@@ -114,8 +127,9 @@ bool engine::collision_logic(player side)
 		bat_top = left_bat_.position().y - 5;
 		bat_bot = left_bat_.position().y + 105;
 
-	// right player; +/-5 so that it feels more fair
-	} else {
+		// right player; +/-5 so that it feels more fair
+	}
+	else {
 		bat_top = right_bat_.position().y - 5;
 		bat_bot = right_bat_.position().y + 105;
 	}
@@ -124,53 +138,18 @@ bool engine::collision_logic(player side)
 	const int ball_top = ball_.position().y;
 	const int ball_bot = ball_.position().y + 20;
 
-	if (bat_top > ball_top && bat_bot > ball_top ||
-	    bat_bot < ball_bot && bat_top < ball_bot) {
+	if (bat_top > ball_top && bat_bot > ball_top || bat_bot < ball_bot && bat_top < ball_bot) {
 		return false;
-	} else {
+	}
+	else {
 		return true;
 	}
 }
 
-// @@chris: da diese methode nur für den Ball gebraucht wird, sollte man hier
-//          Vererbung benutzen?
-void engine::reset_game(sgfx::point center)
+void engine::reset()
 {
-	ball_.set_position(center);
-
-	random_device random_device;
-	mt19937 random_engine{random_device()};
-	uniform_int_distribution<int> distribution{1, 8};
-
-	switch (distribution(random_engine)) {
-		// easy velocity
-		case 1:
-			ball_.set_velocity({6, 2});
-			break;
-		case 2:
-			ball_.set_velocity({6, -2});
-			break;
-		case 3:
-			ball_.set_velocity({-6, 2});
-			break;
-		case 4:
-			ball_.set_velocity({-6, -2});
-			break;
-
-		// hard velocity
-		case 5:
-			ball_.set_velocity({4, 5});
-			break;
-		case 6:
-			ball_.set_velocity({4, -5});
-			break;
-		case 7:
-			ball_.set_velocity({-4, 5});
-			break;
-		case 8:
-			ball_.set_velocity({-4, -5});
-			break;
-	}
+	ball_.set_position(size_ / 2);
+	ball_.set_velocity(random_velocity());
 }
 
 void engine::update()
@@ -189,29 +168,33 @@ void engine::update()
 
 			if (collision_logic(player::left) == true) {
 				ball_.reflect_x();
-			} else {
+			}
+			else {
 				++goals_right_;
 				if (goals_right_ >= max_goals_) {
 					//@chris
-					//print left player won!
-				} else {
-					reset_game({sizeX_ / 2, sizeY_ / 2});
+					// print left player won!
+				}
+				else {
+					reset();
 				}
 			}
-			
+
 			break;
 		case object::status::stuck_right:
 			DEBUG("stuck R");
 
 			if (collision_logic(player::right) == true) {
 				ball_.reflect_x();
-			} else {
+			}
+			else {
 				++goals_left_;
 				if (goals_left_ >= max_goals_) {
 					//@chris
-					//print left player won!
-				} else {
-					reset_game({sizeX_ / 2, sizeY_ / 2});
+					// print left player won!
+				}
+				else {
+					reset();
 				}
 			}
 

@@ -9,7 +9,7 @@
 namespace sgfx {
 class widget;
 class canvas;
-}
+}  // namespace sgfx
 
 namespace pong {
 
@@ -30,17 +30,17 @@ class object {
 	/**
 	 * Constructs an object.
 	 *
-	 * @p image the visual to use when drawing this object
+	 * @p size object dimension
 	 * @p bounds the bounds within this object may be
 	 * @p maxVelocities maximum velocity per coordinate this object may gain
 	 * @p initialPosition the objects initial position
 	 */
-	object(sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
+	object(sgfx::dimension size,
+		   sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
 		   sgfx::vec initialAcceleration = {0, 0});
 
-
 	/// sets the object to the desired position
-	void object::set_position(sgfx::point position);
+	void set_position(sgfx::point position);
 
 	/// Accelerates the object by increasing its velocity by given @p acceleration.
 	void accelerate(sgfx::vec acceleration);
@@ -53,9 +53,6 @@ class object {
 
 	/// Reflects the ball at its current Y position (vertical wall)
 	void reflect_y();
-
-	/// resets the game by moving the ball to the center and asigning a random preset velocity
-	void reset_game(sgfx::point center);
 
 	/// Updates its current position with regard to acceleration & bounds
 	status update_step();
@@ -72,6 +69,7 @@ class object {
 	}
 
   private:
+	const sgfx::dimension size_;
 	const sgfx::rectangle bounds_;
 	const sgfx::vec maxVelocities_;
 	sgfx::point position_;

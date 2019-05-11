@@ -69,9 +69,20 @@ struct dimension {
 	int width;
 	int height;
 
-	constexpr bool operator==(const dimension& d) const noexcept { return width == d.width && height == d.height; }
+	constexpr bool operator==(const dimension& d) const noexcept
+	{
+		return width == d.width && height == d.height;
+	}
+
 	constexpr bool operator!=(const dimension& d) const noexcept { return !(*this == d); }
+
+	constexpr operator point() const noexcept { return point{width, height}; }
 };
+
+constexpr dimension operator/(dimension const& dim, int div)
+{
+	return dimension{dim.width / div, dim.height / div};
+}
 
 struct rectangle {
 	point top_left;
@@ -84,11 +95,11 @@ struct rectangle {
 };
 
 /**
-  * Tests whether or not rectangle a is intersecting with rectangle b.
-  *
-  * @retval true they are intersecting with each other.
-  * @retval false they're not intersecting with each other.
-  */
+ * Tests whether or not rectangle a is intersecting with rectangle b.
+ *
+ * @retval true they are intersecting with each other.
+ * @retval false they're not intersecting with each other.
+ */
 constexpr bool intersects(rectangle const& a, rectangle const& b)
 {
 	// vertical check

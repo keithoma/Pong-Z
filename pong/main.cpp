@@ -38,9 +38,7 @@ int main(int argc, char* argv[])
 	auto const bat_img = canvas::colored({20, 100}, color::blue);
 
 	// initialize the engine; parameters are: window width, window height, goals to win
-	auto engine = pong::engine{1024, 768, 8};
-
-	engine.reset_game({main_window.width() / 2, main_window.height() / 2});
+	auto engine = pong::engine{dimension{1024, 768}, 8};
 
 	while (main_window.handle_events() && !main_window.should_close()) {
 		engine.update();

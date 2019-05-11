@@ -1,17 +1,19 @@
 #include "object.hpp"
-#include <sgfx/primitives.hpp>
 #include <sgfx/canvas.hpp>
+#include <sgfx/primitives.hpp>
 
 #include <algorithm>
 #include <climits>
 
 using namespace std;
+using namespace sgfx;
 
 namespace pong {
 
-object::object(sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point initialPosition,
-			   sgfx::vec initialAcceleration)
-	: bounds_{bounds},
+object::object(dimension size, rectangle bounds, vec maxVelocities, point initialPosition,
+			   vec initialAcceleration)
+	: size_{size},
+	  bounds_{bounds},
 	  maxVelocities_{maxVelocities},
 	  position_{initialPosition},
 	  velocity_{initialAcceleration},
@@ -19,32 +21,34 @@ object::object(sgfx::rectangle bounds, sgfx::vec maxVelocities, sgfx::point init
 {
 }
 
-void object::set_position(sgfx::point position)
+void object::set_position(point position)
 {
 	position_ = {position};
 }
 
-void object::accelerate(sgfx::vec acceleration)
+void object::accelerate(vec acceleration)
 {
 	set_velocity(velocity_ + acceleration);
 }
 
 // @@chris: kann man bestimmt schöner machen
 // 		    vielleicht mit abs()
-void object::set_velocity(sgfx::vec velocity)
+void object::set_velocity(vec velocity)
 {
 	int velox;
 	int veloy;
 
 	if (velocity.x < 0) {
-		velox = max(velocity.x, - maxVelocities_.x);
-	} else {
+		velox = max(velocity.x, -maxVelocities_.x);
+	}
+	else {
 		velox = min(velocity.x, maxVelocities_.x);
 	}
 
 	if (velocity.y < 0) {
-		veloy = max(velocity.y, - maxVelocities_.y);
-	} else {
+		veloy = max(velocity.y, -maxVelocities_.y);
+	}
+	else {
 		veloy = min(velocity.y, maxVelocities_.y);
 	}
 
@@ -53,12 +57,12 @@ void object::set_velocity(sgfx::vec velocity)
 
 void object::reflect_x()
 {
-	set_velocity({- velocity_.x, velocity_.y});
+	set_velocity({-velocity_.x, velocity_.y});
 }
 
 void object::reflect_y()
 {
-	set_velocity({velocity_.x, - velocity_.y});
+	set_velocity({velocity_.x, -velocity_.y});
 }
 
 object::status object::update_step()
@@ -80,20 +84,17 @@ object::status object::update_step()
 
 	// edge cases; sets 'status_' to 'stuck_top_left', 'stuck_bottom_left', 'stuck_top_right' or
 	// 'stuck_bottom_right'
-	if (position_.x == bounds_.top_left.x &&
-		position_.y == bounds_.top_left.y) {
+	if (position_.x == bounds_.top_left.x && position_.y == bounds_.top_left.y) {
 		status_ = status::stuck_top_left;
 	}
-	else if (position_.x == bounds_.top_left.x &&
-			 position_.y == bounds_.top_left.y + bounds_.size.height) {
+	else if (position_.x == bounds_.top_left.x && position_.y == bounds_.top_left.y + bounds_.size.height) {
 		status_ = status::stuck_bottom_left;
 	}
-	else if (position_.x == bounds_.top_left.x + bounds_.size.width &&
-			 position_.y == bounds_.top_left.y) {
+	else if (position_.x == bounds_.top_left.x + bounds_.size.width && position_.y == bounds_.top_left.y) {
 		status_ = status::stuck_top_right;
 	}
-	else if (position_.x == bounds_.top_left.x + bounds_.size.width &&
-			 position_.y == bounds_.top_left.y + bounds_.size.height) {
+	else if (position_.x == bounds_.top_left.x + bounds_.size.width
+			 && position_.y == bounds_.top_left.y + bounds_.size.height) {
 		status_ = status::stuck_bottom_right;
 	}
 
@@ -118,7 +119,7 @@ object::status object::update_step()
 	return status_;
 }
 
-void draw(object const& object, sgfx::canvas const& image, sgfx::widget& target)
+void draw(object const& object, canvas const& image, widget& target)
 {
 	sgfx::draw(target, image, object.position());
 }
