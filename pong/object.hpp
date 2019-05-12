@@ -78,7 +78,7 @@ class object {
 	sgfx::vec const& velocity() const noexcept { return velocity_; }
 
 	/// Retrieves the geometry (bounding box) of this object in space.
-	sgfx::rectangle bounding_box() const noexcept { return sgfx::rectangle{position_, size_}; }
+	constexpr sgfx::rectangle bounding_box() const noexcept { return sgfx::rectangle{position_, size_}; }
 
 	std::string debug_string() const
 	{
