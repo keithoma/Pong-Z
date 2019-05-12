@@ -128,13 +128,35 @@ void engine::update(std::chrono::duration<double> delta)
 		case object::status::stuck_bottom:
 			ball_.reflect_y();
 			break;
+
+		// edge cases; perhaps redundant
 		case object::status::stuck_top_left:
 		case object::status::stuck_bottom_left:
+			if (is_colliding(ball_, left_bat_)) {
+				ball_.reflect_x();
+				ball_.reflect_y();
+			} else {
+				++goals_right_;
+				goal_(player::right, points());
+				if (goals_right_ < max_goals_)
+					reset();
+				else
+					game_won_(player::right, points());
+			}
+			break;
 		case object::status::stuck_top_right:
 		case object::status::stuck_bottom_right:
-			//@TODO: collision logic need to be implemented here
-			ball_.reflect_x();
-			ball_.reflect_y();
+			if (is_colliding(ball_, right_bat_)) {
+				ball_.reflect_x();
+				ball_.reflect_y();
+			} else {
+				++goals_left_;
+				goal_(player::left, points());
+				if (goals_left_ < max_goals_)
+					reset();
+				else
+					game_won_(player::left, points());
+			}
 			break;
 		default:
 			// should never happen
