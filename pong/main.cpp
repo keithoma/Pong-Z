@@ -5,22 +5,21 @@
 #include <sgfx/color.hpp>
 #include <sgfx/key.hpp>
 #include <sgfx/primitives.hpp>
-#include <sgfx/canvas.hpp>
 #include <sgfx/window.hpp>
 
-#include <chrono>
-#include <iostream>
 #include <cassert>
+#include <chrono>
 #include <cstdio>
+#include <iostream>
 
 using namespace sgfx;
 using namespace pong;
 using namespace std;
 
-#define DEBUG(msg) \
-	do {                                   \
-		fprintf(stderr, msg);              \
-		fprintf(stderr, "\n");             \
+#define DEBUG(msg)             \
+	do {                       \
+		fprintf(stderr, msg);  \
+		fprintf(stderr, "\n"); \
 	} while (0)
 
 #define DEBUGF(msg, ...)                   \
@@ -30,13 +29,36 @@ using namespace std;
 	} while (0)
 
 using namespace std::chrono;
+
+/// Helper function-object to provide delta times between calls.
+class time_delta_provider {
+  private:
+	time_point<steady_clock> last_ = steady_clock::now();
+
+  public:
+	duration<double> operator()()
+	{
+		auto const now = steady_clock::now();
+		auto const delta = now - last_;
+		last_ = now;
+		return delta;
+	}
+};
+
+inline ostream& operator<<(ostream& os, engine::points_status const& points)
+{
+	return os << get<0>(points) << ":" << get<1>(points);
+}
+
 int main(int argc, char* argv[])
 {
-	auto main_window = window{1024, 768};
-
-	// some game feedback implementations
-	auto on_goal = [](player player) { cout << "Player " << player << " has scored a point." << endl; };
-	auto on_game_won = [](player player) { cout << "Player " << player << " has won this match!" << endl; };
+	// game-play feedback
+	auto const static on_goal = [](player player, engine::points_status points) {
+		cout << "[" << points << "] Player " << player << " has scored a point." << endl;
+	};
+	auto const static on_game_won = [](player player, engine::points_status points) {
+		cout << "[" << points << "] Player " << player << " has won this match!" << endl;
+	};
 
 	// initialize the engine; parameters are: window width, window height, goals to win
 	auto game = pong::engine{dimension{1024, 768}, 8, on_goal, on_game_won};
@@ -47,42 +69,27 @@ int main(int argc, char* argv[])
 	// create visual for bat (both bats have same size)
 	auto const bat_img = canvas::colored(game.left_bat().size(), color::blue);
 
+	auto main_window = window{1024, 768};
+	auto delta = time_delta_provider{};
+
 	while (main_window.handle_events() && !main_window.should_close()) {
-		game.update(chrono::steady_clock::now());
+		game.update(delta());
 
 		if (game.over() || main_window.is_pressed(key::escape))
 			break;
-
-		// looks cryptic, but essentially moves the bat according to the keys that are pressed
-		// if no keys are pressed, the bat stops
-		//
-		// left bat:
-		if (main_window.is_pressed(key::wkey) &&
-		   (!main_window.is_pressed(key::skey))) {
+		if (main_window.is_pressed(key::wkey))
 			game.move_left_bat(pong::bat_move::up);
-		} else if (main_window.is_pressed(key::skey) &&
-		          (!main_window.is_pressed(key::wkey))) {
+		if (main_window.is_pressed(key::skey))
 			game.move_left_bat(pong::bat_move::down);
-		} else {
-			game.stop_left_bat(); // TODO: remove once not needed anymore
-		}
-
-		// right bat:
-		if (main_window.is_pressed(key::up) &&
-		   (!main_window.is_pressed(key::down))) {
+		if (main_window.is_pressed(key::up))
 			game.move_right_bat(pong::bat_move::up);
-		} else if (main_window.is_pressed(key::down) &&
-		          (!main_window.is_pressed(key::up))) {
+		if (main_window.is_pressed(key::down))
 			game.move_right_bat(pong::bat_move::down);
-		} else {
-			game.stop_right_bat(); // TODO: remove once not needed anymore
-		}
 
 		clear(main_window, color::black);
 		pong::draw(game.left_bat(), bat_img, main_window);
 		pong::draw(game.right_bat(), bat_img, main_window);
 		pong::draw(game.ball(), ball_img, main_window);
-
 		main_window.show();
 	};
 

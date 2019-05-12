@@ -47,9 +47,9 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 			static_cast<std::uint16_t>(size.height - 20)}},  // boundaries
 															 // -40 to make it more fluid
 		  {6, 6},                                            // max velocity
-		  {size.width / 2, size.height / 2},                 // initial pos
+		  size / 2,                                          // initial pos
 		  random_velocity(),                                 // initial accel
-		  steady_clock::now(),
+		  false,
 	  },
 	  left_bat_{
 		  {20, 100},                         // dimension
@@ -57,17 +57,16 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 		  {0, 6},                            // max velocities
 		  {0, size.height / 2 - 50},         // initial position;
 											 // -50 because the bat height is 100
-		  {0, 0},
-		  steady_clock::now(),
+		  {0, 0},                            // initial accel
+		  true,
 	  },
 	  right_bat_{
 		  {20, 100},                                                     // dimension
 		  {{size.width - 20, 0}, {size.width - 20, size.height - 100}},  // boundaries
 		  {0, 6},                                                        // max velocities
-		  {size.width - 20, size.height / 2 - 50},                       // initial position;
-													// ^ -50 because the bat height is 100
-		  {0, 0},
-		  steady_clock::now(),
+		  {size.width - 20, size.height / 2 - 50},  // initial position (-50 because the bat height is 100)
+		  {0, 0},                                   // initial accel
+		  true,
 	  }
 {
 }
@@ -80,19 +79,8 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
  */
 void engine::move_left_bat(bat_move direction)
 {
-	if (direction == bat_move::up)
-		left_bat_.accelerate({0, -1});
-	else
-		left_bat_.accelerate({0, +1});
-}
-
-/**
- * She stops the left bat by setting the velocity of it to {0, 0}.
- */
-void engine::stop_left_bat()
-{
-	if (left_bat_.velocity() != vec{0, 0})
-		left_bat_.set_velocity({0, 0});
+	static constexpr array<int, 2> ys = {-1, +1};
+	left_bat_.accelerate({0, 5 * ys[static_cast<size_t>(direction)]});
 }
 
 /**
@@ -103,19 +91,8 @@ void engine::stop_left_bat()
  */
 void engine::move_right_bat(bat_move direction)
 {
-	if (direction == bat_move::up)
-		right_bat_.accelerate({0, -1});
-	else
-		right_bat_.accelerate({0, +1});
-}
-
-/**
- * She stops the right bat by setting the velocity of it to {0, 0}.
- */
-void engine::stop_right_bat()
-{
-	if (right_bat_.velocity() != vec{0, 0})
-		right_bat_.set_velocity({0, 0});
+	static constexpr array<int, 2> ys = {-1, +1};
+	right_bat_.accelerate({0, 5 * ys[static_cast<size_t>(direction)]});
 }
 
 vec engine::random_velocity()
@@ -131,16 +108,14 @@ void engine::reset()
 	ball_.set_velocity(random_velocity());
 }
 
-void engine::update(time_point<steady_clock> now)
+void engine::update(std::chrono::duration<double> delta)
 {
-	// TODO: make sure we don't let things move too fast because of faster CPU (by providing own timer)
-	// Per second, 100 speed ticks equal 100 pixels in the Matrix.
-	left_bat_.update(now);
-	right_bat_.update(now);
+	left_bat_.update(delta);
+	right_bat_.update(delta);
 
 	// TODO: slow down bats (down to 0) as they're not getting accelerated by user input
 
-	switch (ball_.update(now)) {
+	switch (ball_.update(delta)) {
 		case object::status::free:
 			if (is_colliding(ball_, left_bat_))
 				ball_.reflect_x();
@@ -152,12 +127,11 @@ void engine::update(time_point<steady_clock> now)
 				ball_.reflect_x();
 			else {
 				++goals_right_;
-				if (goals_right_ >= max_goals_)
-					game_won_(player::right);
-				else {
-					goal_(player::right);
+				goal_(player::right, points());
+				if (goals_right_ < max_goals_)
 					reset();
-				}
+				else
+					game_won_(player::right, points());
 			}
 			break;
 		case object::status::stuck_right:
@@ -165,27 +139,26 @@ void engine::update(time_point<steady_clock> now)
 				ball_.reflect_x();
 			else {
 				++goals_left_;
-				if (goals_left_ >= max_goals_)
-					game_won_(player::left);
-				else {
-					goal_(player::left);
+				goal_(player::left, points());
+				if (goals_left_ < max_goals_)
 					reset();
-				}
+				else
+					game_won_(player::left, points());
 			}
 			break;
 		case object::status::stuck_top:
 		case object::status::stuck_bottom:
 			ball_.reflect_y();
 			break;
-
-		//@TODO: collision logic need to be implemented here
 		case object::status::stuck_top_left:
 		case object::status::stuck_bottom_left:
 		case object::status::stuck_top_right:
 		case object::status::stuck_bottom_right:
+			//@TODO: collision logic need to be implemented here
 			DEBUG("reflect on corner");
 			ball_.reflect_x();
 			ball_.reflect_y();
+			break;
 		default:
 			DEBUG("should never happen");
 	}

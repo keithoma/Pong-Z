@@ -1,9 +1,11 @@
 #pragma once
 
-#include <sgfx/primitive_types.hpp>
 #include "object.hpp"
 
+#include <sgfx/primitive_types.hpp>
+
 #include <chrono>
+#include <cstddef>
 #include <functional>
 #include <random>
 #include <tuple>
@@ -11,17 +13,17 @@
 
 namespace pong {
 
-enum class bat_move {
-	up,
-	down,
+enum class bat_move : std::size_t {
+	up = 0,
+	down = 1,
 };
 
-// not used right now
 enum class player {
 	left,
 	right,
 };
 
+// Writes human readable string of type player to output stream.
 std::ostream& operator<<(std::ostream& os, player p);
 
 /**
@@ -29,30 +31,33 @@ std::ostream& operator<<(std::ostream& os, player p);
  */
 class engine {
   public:
-	using player_callback = std::function<void(player)>;
+	using points_status = std::tuple<unsigned, unsigned>;
+	using player_callback = std::function<void(player, points_status)>;
 
+	/**
+	  * Constructs the game engine.
+	  *
+	  * @p size        Dimensions for internal coordinate system.
+	  * @p max_goals   Goal count needed to declare one player a winnner.
+	  * @p on_goal     Callback to be invoked when a goal occured.
+	  * @p on_game_won Callback to be invoked upon last goal to declare a winner.
+	  */
 	engine(sgfx::dimension size, unsigned max_goals, player_callback on_goal, player_callback on_game_won);
 
 	/// Moves the left bat into the given direction.
 	void move_left_bat(bat_move direction);
 
-	/// stops the left bat
-	void stop_left_bat();
-
 	/// Moves the left bat into the given direction.
 	void move_right_bat(bat_move direction);
 
-	/// stops the left bat
-	void stop_right_bat();
-
 	/// Updates the world state.
-	void update(std::chrono::time_point<std::chrono::steady_clock> now);
+	void update(std::chrono::duration<double> delta);
 
 	/// Resets the game by resetting the ball.
 	void reset();
 
 	/// Retrieves the goals each player has made so far.
-	std::tuple<unsigned, unsigned> points() const noexcept
+	points_status points() const noexcept
 	{
 		return std::make_tuple(goals_left_, goals_right_);
 	}

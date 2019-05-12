@@ -11,9 +11,6 @@ using namespace std;
 using namespace std::chrono;
 using namespace sgfx;
 
-// TODO: new impl (velocity gets updated in update() based on time difference to last update() call)
-#define OLD_VELOCITY_IMPL
-
 namespace pong {
 
 void object::set_position(point position)
@@ -23,11 +20,7 @@ void object::set_position(point position)
 
 void object::accelerate(vec acceleration)
 {
-#if defined(OLD_VELOCITY_IMPL)
-	set_velocity(velocity_ + acceleration);
-#else
 	acceleration_ = acceleration;
-#endif
 }
 
 // TODO (chris) schoener machen (abs?)
@@ -63,37 +56,23 @@ void object::reflect_y()
 	set_velocity({velocity_.x, -velocity_.y});
 }
 
-object::status object::update(time_point<steady_clock> now)
+object::status object::update(duration<double> delta)
 {
-	static auto const clamp = [](int low, int val, int high) {
-		if (val < low)
-			return low;
-		else if (val > high)
-			return high;
-		else
-			return val;
+	auto clamp = [](point const& p, rectangle const& bb) -> point {
+		auto const x = max(min(p.x, bb.right()), bb.left());
+		auto const y = max(min(p.y, bb.bottom()), bb.top());
+		return {x, y};
 	};
 
-#if !defined(OLD_VELOCITY_IMPL)
-	// 100 pixels = 1 second * 1 velocity
-	auto const time_gap = duration<double>{now - last_update_};
-	auto const adj = static_cast<int>(10.0 * time_gap.count());
+	set_velocity(velocity_ + acceleration_);
 
-	velocity_ = (velocity_ + acceleration_) * adj;
+	auto const distance = velocity_ * static_cast<int>(100.0 * delta.count());
+
+	position_ = clamp(position_ + distance, bounds_);
 	acceleration_ = {0, 0};
 
-	// debug print
-	cout << "adj: " << adj
-		 << " a: " << to_string(acceleration_)
-		 << " v: " << to_string(velocity_)
-		 << "\n";
-#endif
-
-	position_.x =
-		clamp(bounds_.top_left.x, position_.x + velocity_.x, bounds_.top_left.x + bounds_.size.width);
-
-	position_.y =
-		clamp(bounds_.top_left.y, position_.y + velocity_.y, bounds_.top_left.y + bounds_.size.height);
+	if (decelerating_)
+		velocity_ = velocity_ * 0.9;
 
 	// edge cases; sets 'status_' to 'stuck_top_left', 'stuck_bottom_left', 'stuck_top_right' or
 	// 'stuck_bottom_right'
@@ -129,7 +108,6 @@ object::status object::update(time_point<steady_clock> now)
 	else {
 		status_ = status::free;
 	}
-	last_update_ = now;
 	return status_;
 }
 

@@ -40,6 +40,11 @@ constexpr point operator*(point const& a, int s)
 	return point{a.x * s, a.y * s};
 }
 
+constexpr point operator*(point const& a, double s)
+{
+	return point{static_cast<int>(a.x * s), static_cast<int>(a.y * s)};
+}
+
 constexpr point operator+(point const& a, point const& b)
 {
 	return point{a.x + b.x, a.y + b.y};
