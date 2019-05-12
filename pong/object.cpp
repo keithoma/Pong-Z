@@ -23,27 +23,11 @@ void object::accelerate(vec acceleration)
 	acceleration_ = acceleration;
 }
 
-// TODO (chris) schoener machen (abs?)
 void object::set_velocity(vec velocity)
 {
-	int velox;
-	int veloy;
-
-	if (velocity.x < 0) {
-		velox = max(velocity.x, -maxVelocities_.x);
-	}
-	else {
-		velox = min(velocity.x, maxVelocities_.x);
-	}
-
-	if (velocity.y < 0) {
-		veloy = max(velocity.y, -maxVelocities_.y);
-	}
-	else {
-		veloy = min(velocity.y, maxVelocities_.y);
-	}
-
-	velocity_ = {velox, veloy};
+	// (x > 0) - (x < 0) returns the sign of x
+	velocity_ = {((velocity.x > 0) - (velocity.x < 0)) * min(abs(velocity.x), maxVelocities_.x),
+	             ((velocity.y > 0) - (velocity.y < 0)) * min(abs(velocity.y), maxVelocities_.y)};
 }
 
 void object::reflect_x()
