@@ -12,8 +12,12 @@ class score_board : public sgfx::canvas {
 	score_board& operator++();
 	score_board& operator++(int) { return ++*this; }
 
+	score_board& operator=(unsigned);
+
+	void redraw();
+
   private:
-	void draw_bar(int _n, sgfx::color::rgb_color _color);
+	void draw_bar(unsigned _n, sgfx::color::rgb_color _color);
 
   private:
 	unsigned max_points_;

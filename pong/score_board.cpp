@@ -12,17 +12,18 @@ constexpr int bar_padding_width = 10;
 constexpr int bar_height = 50;
 
 score_board::score_board(unsigned max_points)
-	: canvas{{static_cast<int>(max_points) * (bar_width + bar_padding_width), bar_height}}, max_points_{max_points}, current_points_{0}
+	: canvas{{static_cast<int>(max_points) * (bar_width + bar_padding_width), bar_height}},
+	  max_points_{max_points},
+	  current_points_{0}
 {
 	sgfx::clear(*this, sgfx::color::black);
 
-	for (size_t n = 1; n <= max_points; ++n)
-		draw_bar(n, color::gray);
+	redraw();
 }
 
-void score_board::draw_bar(int _n, color::rgb_color _color)
+void score_board::draw_bar(unsigned _n, color::rgb_color _color)
 {
-	auto const top_left = point{(_n - 1) * 20 + 5, 0};
+	auto const top_left = point{(static_cast<int>(_n) - 1) * 20 + 5, 0};
 	auto const rect = rectangle{top_left, dimension{10, height()}};
 
 	sgfx::fill(*this, rect, _color);
@@ -34,6 +35,26 @@ score_board& score_board::operator++()
 		draw_bar(++current_points_, color::yellow);
 
 	return *this;
+}
+
+score_board& score_board::operator=(unsigned _n)
+{
+	// Optimizations possible, but overhead trivial.
+	current_points_ = _n;
+	redraw();
+
+	return *this;
+}
+
+void score_board::redraw()
+{
+	clear(*this, color::black);
+
+	for (unsigned n = 1; n <= current_points_; ++n)
+		draw_bar(n, color::yellow);
+
+	for (unsigned n = current_points_ + 1; n <= max_points_; ++n)
+		draw_bar(n, color::gray);
 }
 
 }  // namespace pong

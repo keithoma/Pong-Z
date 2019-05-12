@@ -68,11 +68,19 @@ void frontend::run()
 
 bool frontend::handle_events()
 {
-	if (!main_window_.handle_events() || main_window_.should_close())
+	if (!main_window_.handle_events() || main_window_.should_close() || main_window_.is_pressed(key::escape))
 		return false;
 
-	if (main_window_.is_pressed(key::escape) || game_.over())
-		return false;
+	if (main_window_.is_pressed(key::backspace)) {
+		game_.reset();
+		scores_left_ = 0;
+		scores_right_ = 0;
+	}
+
+	if (game_.over()) {
+		game_.freeze();	
+		return true;
+	}
 
 	if (main_window_.is_pressed(key::wkey))
 		game_.move_left_bat(pong::bat_move::up);
@@ -99,9 +107,9 @@ void frontend::render_scene()
 
 	// sbp = score board position
 	auto constexpr sbp_padding_horizontal = 10;
-	auto constexpr sbp_padding_top = 10;
-	auto const sbp_left = point{main_window_.width() / 2 - scores_left_.width() - sbp_padding_horizontal, sbp_padding_top};
-	auto const sbp_right = point{main_window_.width() / 2 + sbp_padding_horizontal, sbp_padding_top};
+	auto constexpr sbp_top = 10;
+	auto const sbp_left = point{main_window_.width() / 2 - scores_left_.width() - sbp_padding_horizontal, sbp_top};
+	auto const sbp_right = point{main_window_.width() / 2 + sbp_padding_horizontal, sbp_top};
 
 	draw(main_window_, scores_left_, sbp_left);
 	draw(main_window_, scores_right_, sbp_right);
@@ -111,9 +119,6 @@ void frontend::render_scene()
 
 void frontend::on_goal(player _player, engine::points_status _points)
 {
-	// TODO: should be rendered on main_window instead
-	cout << "[" << _points << "] Player " << _player << " has scored a point." << endl;
-
 	if (_player == player::left)
 		++scores_left_;
 	else
@@ -122,8 +127,7 @@ void frontend::on_goal(player _player, engine::points_status _points)
 
 void frontend::on_game_won(player player, engine::points_status points)
 {
-	// TODO: should be rendered on main_window instead
-	cout << "[" << points << "] Player " << player << " has won this match!" << endl;
+	// TODO: boah
 }
 
 }  // namespace pong

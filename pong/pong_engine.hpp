@@ -50,20 +50,26 @@ class engine {
 	/// Updates the world state.
 	void update(std::chrono::duration<double> delta);
 
-	/// Resets the game by resetting the ball.
+	/// Freezes the game (for example right at the end of a game, to see the scores, ...)
+	void freeze();
+
+	/// Resets the game by resetting internal state (ball and points).
 	void reset();
+
+	/// Resets the ball and only the ball.
+	void reset_ball();
 
 	/// Retrieves the goals each player has made so far.
 	points_status points() const noexcept
 	{
-		return std::make_tuple(goals_left_, goals_right_);
+		return std::make_tuple(points_left_, points_right_);
 	}
 
 	/// Retrieves maximum number of points a player must get to win.
 	unsigned max_points() const noexcept { return max_points_; }
 
 	/// Tests whether or not game is over.
-	bool over() const noexcept { return goals_left_ >= max_points_ || goals_right_ >= max_points_; }
+	bool over() const noexcept { return points_left_ >= max_points_ || points_right_ >= max_points_; }
 
 	// Object accessors (use them for drawing those objects with a canvas to a window).
 	object const& left_bat() const noexcept { return left_bat_; }
@@ -80,8 +86,8 @@ class engine {
 	player_callback goal_;
 	player_callback game_won_;
 
-	unsigned goals_left_;
-	unsigned goals_right_;
+	unsigned points_left_;
+	unsigned points_right_;
 	std::mt19937 rng_;
 	object ball_;
 	object left_bat_;
