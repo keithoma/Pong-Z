@@ -31,12 +31,12 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 	  ball_{
 		  {20, 20},   // dimension
 		  {{10, 10},  // boundaries
-		   {static_cast<std::uint16_t>(size.width - 40),
-			static_cast<std::uint16_t>(size.height - 20)}},  // boundaries
-															 // -40 to make it more fluid
-		  {6, 6},                                            // max velocity
-		  size / 2,                                          // initial pos
-		  random_velocity(),                                 // initial accel
+		   {static_cast<uint16_t>(size.width - 40),
+			static_cast<uint16_t>(size.height - 20)}},  // boundaries
+														// -40 to make it more fluid
+		  {6, 6},                                       // max velocity
+		  size / 2,                                     // initial pos
+		  random_velocity(),                            // initial accel
 		  false,
 	  },
 	  left_bat_{
@@ -109,7 +109,7 @@ void engine::reset()
 	points_right_ = 0;
 }
 
-void engine::update(std::chrono::duration<double> delta)
+void engine::update(duration<double> delta)
 {
 	left_bat_.update(delta);
 	right_bat_.update(delta);

@@ -24,8 +24,6 @@ score_board::score_board(unsigned max_points)
 	  max_points_{max_points},
 	  current_points_{0}
 {
-	clear(*this, color::black);
-
 	redraw();
 }
 
