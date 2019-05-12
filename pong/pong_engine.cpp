@@ -24,14 +24,6 @@ using namespace sgfx;
 
 namespace pong {
 
-std::ostream& operator<<(std::ostream& os, player p)
-{
-	if (p == player::left)
-		os << "left";
-	else
-		os << "right";
-	return os;
-}
 engine::engine(dimension size, unsigned max_goals, player_callback goal, player_callback game_won)
 	: size_{size},
 	  max_goals_{max_goals},

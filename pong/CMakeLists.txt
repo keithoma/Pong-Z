@@ -8,6 +8,8 @@ add_executable(pong
 	main.cpp
 	object.hpp
 	object.cpp
+	frontend.hpp
+	frontend.cpp
 	pong_engine.hpp
 	pong_engine.cpp
 )

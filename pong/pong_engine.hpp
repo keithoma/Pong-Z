@@ -18,13 +18,10 @@ enum class bat_move : std::size_t {
 	down = 1,
 };
 
-enum class player {
-	left,
-	right,
+enum class player : std::size_t {
+	left = 0,
+	right = 1,
 };
-
-// Writes human readable string of type player to output stream.
-std::ostream& operator<<(std::ostream& os, player p);
 
 /**
  * Pong Game Engine.
