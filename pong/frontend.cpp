@@ -90,19 +90,26 @@ bool frontend::handle_events()
 void frontend::render_scene()
 {
 	clear(main_window_, color::black);
+
 	pong::draw(game_.left_bat(), bat_image_, main_window_);
 	pong::draw(game_.right_bat(), bat_image_, main_window_);
 	pong::draw(game_.ball(), ball_image_, main_window_);
+
+	// TODO: Draw scores for each player on main_window.
+	//       Use game_.points() to access scores.
+
 	main_window_.show();
 }
 
 void frontend::on_goal(player player, engine::points_status points)
 {
+	// TODO: should be rendered on main_window instead
 	cout << "[" << points << "] Player " << player << " has scored a point." << endl;
 }
 
 void frontend::on_game_won(player player, engine::points_status points)
 {
+	// TODO: should be rendered on main_window instead
 	cout << "[" << points << "] Player " << player << " has won this match!" << endl;
 }
 

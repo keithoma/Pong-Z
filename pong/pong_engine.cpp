@@ -6,18 +6,6 @@
 #include <chrono>
 #include <random>
 
-#define DEBUG(msg)                       \
-	do {                                 \
-		fprintf(stderr, "engine: " msg); \
-		fprintf(stderr, "\n");           \
-	} while (0)
-
-#define DEBUGF(msg, ...)                              \
-	do {                                              \
-		fprintf(stderr, "engine: " msg, __VA_ARGS__); \
-		fprintf(stderr, "\n");                        \
-	} while (0)
-
 using namespace std;
 using namespace std::chrono;
 using namespace sgfx;
@@ -105,8 +93,6 @@ void engine::update(std::chrono::duration<double> delta)
 	left_bat_.update(delta);
 	right_bat_.update(delta);
 
-	// TODO: slow down bats (down to 0) as they're not getting accelerated by user input
-
 	switch (ball_.update(delta)) {
 		case object::status::free:
 			if (is_colliding(ball_, left_bat_))
@@ -147,12 +133,12 @@ void engine::update(std::chrono::duration<double> delta)
 		case object::status::stuck_top_right:
 		case object::status::stuck_bottom_right:
 			//@TODO: collision logic need to be implemented here
-			DEBUG("reflect on corner");
 			ball_.reflect_x();
 			ball_.reflect_y();
 			break;
 		default:
-			DEBUG("should never happen");
+			// should never happen
+			break;
 	}
 }
 
