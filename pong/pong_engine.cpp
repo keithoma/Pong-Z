@@ -1,3 +1,11 @@
+// This file is part of the "pong" project, http://github.com/keithoma/pong>
+//   (c) 2019-2019 Christian Parpart <christian@parpart.family>
+//   (c) 2019-2019 Kei Thoma <thomakmj@gmail.com>
+//
+// Licensed under the MIT License (the "License"); you may not use this
+// file except in compliance with the License. You may obtain a copy of
+// the License at: http://opensource.org/licenses/MIT
+
 #include "pong_engine.hpp"
 #include <sgfx/primitive_types.hpp>
 
@@ -14,11 +22,11 @@ namespace pong {
 
 engine::engine(dimension size, unsigned max_goals, player_callback goal, player_callback game_won)
 	: size_{size},
-	  max_goals_{max_goals},
+	  max_points_{max_goals},
 	  goal_{move(goal)},
 	  game_won_{move(game_won)},
-	  goals_left_{0},
-	  goals_right_{0},
+	  points_left_{0},
+	  points_right_{0},
 	  rng_{},
 	  ball_{
 		  {20, 20},   // dimension
@@ -60,7 +68,7 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 void engine::move_left_bat(bat_move direction)
 {
 	static constexpr array<int, 2> ys = {-1, +1};
-	left_bat_.accelerate({0, 5 * ys[static_cast<size_t>(direction)]});
+	left_bat_.accelerate({0, 5 * ys.at(static_cast<size_t>(direction))});
 }
 
 /**
@@ -72,7 +80,7 @@ void engine::move_left_bat(bat_move direction)
 void engine::move_right_bat(bat_move direction)
 {
 	static constexpr array<int, 2> ys = {-1, +1};
-	right_bat_.accelerate({0, 5 * ys[static_cast<size_t>(direction)]});
+	right_bat_.accelerate({0, 5 * ys.at(static_cast<size_t>(direction))});
 }
 
 vec engine::random_velocity()
@@ -82,10 +90,23 @@ vec engine::random_velocity()
 	return velocities[uniform_int_distribution{0, 7}(rng_)];
 }
 
-void engine::reset()
+void engine::freeze()
+{
+	ball_.set_velocity({0, 0});
+}
+
+void engine::reset_ball()
 {
 	ball_.set_position(size_ / 2);
 	ball_.set_velocity(random_velocity());
+}
+
+void engine::reset()
+{
+	reset_ball();
+
+	points_left_ = 0;
+	points_right_ = 0;
 }
 
 void engine::update(std::chrono::duration<double> delta)
@@ -104,10 +125,10 @@ void engine::update(std::chrono::duration<double> delta)
 			if (is_colliding(ball_, left_bat_))
 				ball_.reflect_x();
 			else {
-				++goals_right_;
+				++points_right_;
 				goal_(player::right, points());
-				if (goals_right_ < max_goals_)
-					reset();
+				if (points_right_ < max_points_)
+					reset_ball();
 				else
 					game_won_(player::right, points());
 			}
@@ -116,10 +137,10 @@ void engine::update(std::chrono::duration<double> delta)
 			if (is_colliding(ball_, right_bat_))
 				ball_.reflect_x();
 			else {
-				++goals_left_;
+				++points_left_;
 				goal_(player::left, points());
-				if (goals_left_ < max_goals_)
-					reset();
+				if (points_left_ < max_points_)
+					reset_ball();
 				else
 					game_won_(player::left, points());
 			}
@@ -135,11 +156,12 @@ void engine::update(std::chrono::duration<double> delta)
 			if (is_colliding(ball_, left_bat_)) {
 				ball_.reflect_x();
 				ball_.reflect_y();
-			} else {
-				++goals_right_;
+			}
+			else {
+				++points_right_;
 				goal_(player::right, points());
-				if (goals_right_ < max_goals_)
-					reset();
+				if (points_right_ < max_points_)
+					reset_ball();
 				else
 					game_won_(player::right, points());
 			}
@@ -149,11 +171,12 @@ void engine::update(std::chrono::duration<double> delta)
 			if (is_colliding(ball_, right_bat_)) {
 				ball_.reflect_x();
 				ball_.reflect_y();
-			} else {
-				++goals_left_;
+			}
+			else {
+				++points_left_;
 				goal_(player::left, points());
-				if (goals_left_ < max_goals_)
-					reset();
+				if (points_left_ < max_points_)
+					reset_ball();
 				else
 					game_won_(player::left, points());
 			}

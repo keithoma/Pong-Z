@@ -1,3 +1,11 @@
+// This file is part of the "pong" project, http://github.com/keithoma/pong>
+//   (c) 2019-2019 Christian Parpart <christian@parpart.family>
+//   (c) 2019-2019 Kei Thoma <thomakmj@gmail.com>
+//
+// Licensed under the MIT License (the "License"); you may not use this
+// file except in compliance with the License. You may obtain a copy of
+// the License at: http://opensource.org/licenses/MIT
+
 #include "object.hpp"
 #include <sgfx/canvas.hpp>
 #include <sgfx/primitives.hpp>
@@ -13,17 +21,17 @@ using namespace sgfx;
 
 namespace pong {
 
-void object::set_position(point position)
+void object::set_position(point const& position)
 {
 	position_ = position;
 }
 
-void object::accelerate(vec acceleration)
+void object::accelerate(vec const& acceleration)
 {
 	acceleration_ = acceleration;
 }
 
-void object::set_velocity(vec velocity)
+void object::set_velocity(vec const& velocity)
 {
 	// (x > 0) - (x < 0) returns the sign of x
 	velocity_ = {((velocity.x > 0) - (velocity.x < 0)) * min(abs(velocity.x), maxVelocities_.x),

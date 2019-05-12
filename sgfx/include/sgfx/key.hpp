@@ -34,6 +34,7 @@ inline constexpr const key_id up{GLFW_KEY_UP};
 inline constexpr const key_id down{GLFW_KEY_DOWN};
 
 // added
+inline constexpr const key_id backspace{GLFW_KEY_BACKSPACE};
 inline constexpr const key_id wkey{GLFW_KEY_W};
 inline constexpr const key_id skey{GLFW_KEY_S};
 

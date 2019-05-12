@@ -8,33 +8,28 @@
 
 #pragma once
 
-#include "pong_engine.hpp"
-#include "score_board.hpp"
-
 #include <sgfx/canvas.hpp>
-#include <sgfx/window.hpp>
+#include <sgfx/color.hpp>
 
 namespace pong {
 
-class frontend {
+class score_board : public sgfx::canvas {
   public:
-	frontend();
+	explicit score_board(unsigned max_points);
 
-	void run();
+	score_board& operator++();
+	score_board& operator++(int) { return ++*this; }
+
+	score_board& operator=(unsigned);
+
+	void redraw();
 
   private:
-	bool handle_events();
-	void render_scene();
-	void on_goal(player player, engine::points_status points);
-	void on_game_won(player player, engine::points_status points);
+	void draw_bar(unsigned _n, sgfx::color::rgb_color _color);
 
   private:
-	engine game_;
-	sgfx::window main_window_;
-	sgfx::canvas ball_image_;
-	sgfx::canvas bat_image_;
-	score_board scores_left_;
-	score_board scores_right_;
+	unsigned max_points_;
+	unsigned current_points_;
 };
 
-}
+}  // namespace pong

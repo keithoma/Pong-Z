@@ -1,3 +1,11 @@
+// This file is part of the "pong" project, http://github.com/keithoma/pong>
+//   (c) 2019-2019 Christian Parpart <christian@parpart.family>
+//   (c) 2019-2019 Kei Thoma <thomakmj@gmail.com>
+//
+// Licensed under the MIT License (the "License"); you may not use this
+// file except in compliance with the License. You may obtain a copy of
+// the License at: http://opensource.org/licenses/MIT
+
 #include "frontend.hpp"
 
 #include <sgfx/primitives.hpp>
@@ -50,7 +58,9 @@ frontend::frontend()
 			bind(&frontend::on_game_won, this, _1, _2)},
 	  main_window_{1024, 768},
 	  ball_image_{canvas::colored(game_.ball().size(), color::red)},
-	  bat_image_{canvas::colored(game_.left_bat().size(), color::blue)}
+	  bat_image_{canvas::colored(game_.left_bat().size(), color::blue)},
+	  scores_left_{game_.max_points()},
+	  scores_right_{game_.max_points()}
 {
 }
 
@@ -66,11 +76,19 @@ void frontend::run()
 
 bool frontend::handle_events()
 {
-	if (!main_window_.handle_events() || main_window_.should_close())
+	if (!main_window_.handle_events() || main_window_.should_close() || main_window_.is_pressed(key::escape))
 		return false;
 
-	if (main_window_.is_pressed(key::escape) || game_.over())
-		return false;
+	if (main_window_.is_pressed(key::backspace)) {
+		game_.reset();
+		scores_left_ = 0;
+		scores_right_ = 0;
+	}
+
+	if (game_.over()) {
+		game_.freeze();	
+		return true;
+	}
 
 	if (main_window_.is_pressed(key::wkey))
 		game_.move_left_bat(pong::bat_move::up);
@@ -91,26 +109,33 @@ void frontend::render_scene()
 {
 	clear(main_window_, color::black);
 
-	pong::draw(game_.left_bat(), bat_image_, main_window_);
-	pong::draw(game_.right_bat(), bat_image_, main_window_);
-	pong::draw(game_.ball(), ball_image_, main_window_);
+	draw(game_.left_bat(), bat_image_, main_window_);
+	draw(game_.right_bat(), bat_image_, main_window_);
+	draw(game_.ball(), ball_image_, main_window_);
 
-	// TODO: Draw scores for each player on main_window.
-	//       Use game_.points() to access scores.
+	// sbp = score board position
+	auto constexpr sbp_padding_horizontal = 10;
+	auto constexpr sbp_top = 10;
+	auto const sbp_left = point{main_window_.width() / 2 - scores_left_.width() - sbp_padding_horizontal, sbp_top};
+	auto const sbp_right = point{main_window_.width() / 2 + sbp_padding_horizontal, sbp_top};
+
+	draw(main_window_, scores_left_, sbp_left);
+	draw(main_window_, scores_right_, sbp_right);
 
 	main_window_.show();
 }
 
-void frontend::on_goal(player player, engine::points_status points)
+void frontend::on_goal(player _player, engine::points_status _points)
 {
-	// TODO: should be rendered on main_window instead
-	cout << "[" << points << "] Player " << player << " has scored a point." << endl;
+	if (_player == player::left)
+		++scores_left_;
+	else
+		++scores_right_;
 }
 
 void frontend::on_game_won(player player, engine::points_status points)
 {
-	// TODO: should be rendered on main_window instead
-	cout << "[" << points << "] Player " << player << " has won this match!" << endl;
+	// TODO: boah
 }
 
 }  // namespace pong
