@@ -59,8 +59,11 @@ class engine {
 		return std::make_tuple(goals_left_, goals_right_);
 	}
 
+	/// Retrieves maximum number of points a player must get to win.
+	unsigned max_points() const noexcept { return max_points_; }
+
 	/// Tests whether or not game is over.
-	bool over() const noexcept { return goals_left_ >= max_goals_ || goals_right_ >= max_goals_; }
+	bool over() const noexcept { return goals_left_ >= max_points_ || goals_right_ >= max_points_; }
 
 	// Object accessors (use them for drawing those objects with a canvas to a window).
 	object const& left_bat() const noexcept { return left_bat_; }
@@ -73,7 +76,7 @@ class engine {
 
   private:
 	sgfx::dimension size_;
-	unsigned max_goals_;
+	unsigned max_points_;
 	player_callback goal_;
 	player_callback game_won_;
 

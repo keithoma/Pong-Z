@@ -13,17 +13,17 @@ using namespace sgfx;
 
 namespace pong {
 
-void object::set_position(point position)
+void object::set_position(point const& position)
 {
 	position_ = position;
 }
 
-void object::accelerate(vec acceleration)
+void object::accelerate(vec const& acceleration)
 {
 	acceleration_ = acceleration;
 }
 
-void object::set_velocity(vec velocity)
+void object::set_velocity(vec const& velocity)
 {
 	// (x > 0) - (x < 0) returns the sign of x
 	velocity_ = {((velocity.x > 0) - (velocity.x < 0)) * min(abs(velocity.x), maxVelocities_.x),

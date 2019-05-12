@@ -51,13 +51,13 @@ class object {
 	}
 
 	/// sets the object to the desired position
-	void set_position(sgfx::point position);
+	void set_position(sgfx::point const& position);
 
 	/// Accelerates the object by increasing its velocity by given @p acceleration.
-	void accelerate(sgfx::vec acceleration);
+	void accelerate(sgfx::vec const& acceleration);
 
 	/// Sets the objects velocity to a fixed value @p velocity.
-	void set_velocity(sgfx::vec vecocity);
+	void set_velocity(sgfx::vec const& vecocity);
 
 	/// Reflects the ball at its current X position (horizontal wall)
 	void reflect_x();

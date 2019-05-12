@@ -50,7 +50,9 @@ frontend::frontend()
 			bind(&frontend::on_game_won, this, _1, _2)},
 	  main_window_{1024, 768},
 	  ball_image_{canvas::colored(game_.ball().size(), color::red)},
-	  bat_image_{canvas::colored(game_.left_bat().size(), color::blue)}
+	  bat_image_{canvas::colored(game_.left_bat().size(), color::blue)},
+	  scores_left_{game_.max_points()},
+	  scores_right_{game_.max_points()}
 {
 }
 
@@ -91,20 +93,31 @@ void frontend::render_scene()
 {
 	clear(main_window_, color::black);
 
-	pong::draw(game_.left_bat(), bat_image_, main_window_);
-	pong::draw(game_.right_bat(), bat_image_, main_window_);
-	pong::draw(game_.ball(), ball_image_, main_window_);
+	draw(game_.left_bat(), bat_image_, main_window_);
+	draw(game_.right_bat(), bat_image_, main_window_);
+	draw(game_.ball(), ball_image_, main_window_);
 
-	// TODO: Draw scores for each player on main_window.
-	//       Use game_.points() to access scores.
+	// sbp = score board position
+	auto constexpr sbp_padding_horizontal = 10;
+	auto constexpr sbp_padding_top = 10;
+	auto const sbp_left = point{main_window_.width() / 2 - scores_left_.width() - sbp_padding_horizontal, sbp_padding_top};
+	auto const sbp_right = point{main_window_.width() / 2 + sbp_padding_horizontal, sbp_padding_top};
+
+	draw(main_window_, scores_left_, sbp_left);
+	draw(main_window_, scores_right_, sbp_right);
 
 	main_window_.show();
 }
 
-void frontend::on_goal(player player, engine::points_status points)
+void frontend::on_goal(player _player, engine::points_status _points)
 {
 	// TODO: should be rendered on main_window instead
-	cout << "[" << points << "] Player " << player << " has scored a point." << endl;
+	cout << "[" << _points << "] Player " << _player << " has scored a point." << endl;
+
+	if (_player == player::left)
+		++scores_left_;
+	else
+		++scores_right_;
 }
 
 void frontend::on_game_won(player player, engine::points_status points)

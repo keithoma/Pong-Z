@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pong_engine.hpp"
+#include "score_board.hpp"
 
 #include <sgfx/canvas.hpp>
 #include <sgfx/window.hpp>
@@ -24,6 +25,8 @@ class frontend {
 	sgfx::window main_window_;
 	sgfx::canvas ball_image_;
 	sgfx::canvas bat_image_;
+	score_board scores_left_;
+	score_board scores_right_;
 };
 
 }

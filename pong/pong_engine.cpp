@@ -14,7 +14,7 @@ namespace pong {
 
 engine::engine(dimension size, unsigned max_goals, player_callback goal, player_callback game_won)
 	: size_{size},
-	  max_goals_{max_goals},
+	  max_points_{max_goals},
 	  goal_{move(goal)},
 	  game_won_{move(game_won)},
 	  goals_left_{0},
@@ -106,7 +106,7 @@ void engine::update(std::chrono::duration<double> delta)
 			else {
 				++goals_right_;
 				goal_(player::right, points());
-				if (goals_right_ < max_goals_)
+				if (goals_right_ < max_points_)
 					reset();
 				else
 					game_won_(player::right, points());
@@ -118,7 +118,7 @@ void engine::update(std::chrono::duration<double> delta)
 			else {
 				++goals_left_;
 				goal_(player::left, points());
-				if (goals_left_ < max_goals_)
+				if (goals_left_ < max_points_)
 					reset();
 				else
 					game_won_(player::left, points());
@@ -138,7 +138,7 @@ void engine::update(std::chrono::duration<double> delta)
 			} else {
 				++goals_right_;
 				goal_(player::right, points());
-				if (goals_right_ < max_goals_)
+				if (goals_right_ < max_points_)
 					reset();
 				else
 					game_won_(player::right, points());
@@ -152,7 +152,7 @@ void engine::update(std::chrono::duration<double> delta)
 			} else {
 				++goals_left_;
 				goal_(player::left, points());
-				if (goals_left_ < max_goals_)
+				if (goals_left_ < max_points_)
 					reset();
 				else
 					game_won_(player::left, points());
