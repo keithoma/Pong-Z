@@ -68,7 +68,7 @@ engine::engine(dimension size, unsigned max_goals, player_callback goal, player_
 void engine::move_left_bat(bat_move direction)
 {
 	static constexpr array<int, 2> ys = {-1, +1};
-	left_bat_.accelerate({0, 5 * ys[static_cast<size_t>(direction)]});
+	left_bat_.accelerate({0, 5 * ys.at(static_cast<size_t>(direction))});
 }
 
 /**
@@ -80,7 +80,7 @@ void engine::move_left_bat(bat_move direction)
 void engine::move_right_bat(bat_move direction)
 {
 	static constexpr array<int, 2> ys = {-1, +1};
-	right_bat_.accelerate({0, 5 * ys[static_cast<size_t>(direction)]});
+	right_bat_.accelerate({0, 5 * ys.at(static_cast<size_t>(direction))});
 }
 
 vec engine::random_velocity()

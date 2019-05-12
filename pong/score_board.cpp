@@ -24,17 +24,17 @@ score_board::score_board(unsigned max_points)
 	  max_points_{max_points},
 	  current_points_{0}
 {
-	sgfx::clear(*this, sgfx::color::black);
+	clear(*this, color::black);
 
 	redraw();
 }
 
 void score_board::draw_bar(unsigned _n, color::rgb_color _color)
 {
-	auto const top_left = point{(static_cast<int>(_n) - 1) * 20 + 5, 0};
+	auto const top_left = point{(static_cast<int>(_n) - 1) * (bar_width + bar_padding_width) + 5, 0};
 	auto const rect = rectangle{top_left, dimension{10, height()}};
 
-	sgfx::fill(*this, rect, _color);
+	fill(*this, rect, _color);
 }
 
 score_board& score_board::operator++()
