@@ -44,8 +44,8 @@ class object {
 	 * @p maxVelocities maximum velocity per coordinate this object may gain
 	 * @p initialPosition the objects initial position
 	 */
-	constexpr object(sgfx::dimension size, sgfx::rectangle bounds, sgfx::vec maxVelocities,
-					 sgfx::point initialPosition, sgfx::vec initialAcceleration,
+	constexpr object(sgfx::dimension size, sgfx::rectangle bounds, sgfx::vec<int> maxVelocities,
+					 sgfx::point initialPosition, sgfx::vec<int> initialAcceleration,
 					 bool decelerating)
 		: size_{size},
 		  bounds_{bounds},
@@ -62,10 +62,10 @@ class object {
 	void set_position(sgfx::point const& position);
 
 	/// Accelerates the object by increasing its velocity by given @p acceleration.
-	void accelerate(sgfx::vec const& acceleration);
+	void accelerate(sgfx::vec<int> const& acceleration);
 
 	/// Sets the objects velocity to a fixed value @p velocity.
-	void set_velocity(sgfx::vec const& vecocity);
+	void set_velocity(sgfx::vec<int> const& vecocity);
 
 	/// Reflects the ball at its current X position (horizontal wall)
 	void reflect_x();
@@ -83,7 +83,7 @@ class object {
 	sgfx::point const& position() const noexcept { return position_; }
 
 	/// Retrieves the current object velocity (speed).
-	sgfx::vec const& velocity() const noexcept { return velocity_; }
+	sgfx::vec<int> const& velocity() const noexcept { return velocity_; }
 
 	/// Retrieves the geometry (bounding box) of this object in space.
 	constexpr sgfx::rectangle bounding_box() const noexcept { return sgfx::rectangle{position_, size_}; }
@@ -99,10 +99,10 @@ class object {
   private:
 	const sgfx::dimension size_;
 	const sgfx::rectangle bounds_;
-	const sgfx::vec maxVelocities_;
+	const sgfx::vec<int> maxVelocities_;
 	sgfx::point position_;
-	sgfx::vec velocity_;
-	sgfx::vec acceleration_;
+	sgfx::vec<int> velocity_;
+	sgfx::vec<int> acceleration_;
 	status status_;
 	bool decelerating_;
 };

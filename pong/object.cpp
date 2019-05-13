@@ -26,12 +26,12 @@ void object::set_position(point const& position)
 	position_ = position;
 }
 
-void object::accelerate(vec const& acceleration)
+void object::accelerate(vec<int> const& acceleration)
 {
 	acceleration_ = acceleration;
 }
 
-void object::set_velocity(vec const& velocity)
+void object::set_velocity(vec<int> const& velocity)
 {
 	// (x > 0) - (x < 0) returns the sign of x
 	velocity_ = {((velocity.x > 0) - (velocity.x < 0)) * min(abs(velocity.x), maxVelocities_.x),

@@ -83,10 +83,11 @@ void engine::move_right_bat(bat_move direction)
 	right_bat_.accelerate({0, 5 * ys.at(static_cast<size_t>(direction))});
 }
 
-vec engine::random_velocity()
+vec<int> engine::random_velocity()
 {
-	static constexpr array<point, 8> velocities{vec{6, 2}, vec{6, -2}, vec{-6, 2}, vec{-6, -2},
-												vec{4, 5}, vec{4, -5}, vec{-4, 5}, vec{-4, -5}};
+	using V = vec<int>;
+	static constexpr array<point, 8> velocities{V{6, 2}, V{6, -2}, V{-6, 2}, V{-6, -2},
+												V{4, 5}, V{4, -5}, V{-4, 5}, V{-4, -5}};
 	return velocities[uniform_int_distribution{0, 7}(rng_)];
 }
 

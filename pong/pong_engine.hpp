@@ -86,7 +86,7 @@ class engine {
 
   private:
 	/// Constructs a random velocity.
-	sgfx::vec random_velocity();
+	sgfx::vec<int> random_velocity();
 
   private:
 	sgfx::dimension size_;
